@@ -1,16 +1,32 @@
 <?php
 /**
  * @package Neuf_Events
- * @author Thomas Neuf
+ * @author EDB-web
  * @version 0.2.1
  */
+ /*  Copyright 2011  EDB-web  (email : edb-web@studentersamfundet.no)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2 or later, as 
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 /*
 Plugin Name: Neuf Events
 Plugin URI: http://edb.studentersamfundet.no
 Description: Behandler arrangementer. Bruk med andakt.
-Author: Thomas Neuf
+Author: EDB-web
 Version: 0.2.1
 Author URI: http://edb.studentersamfundet.no/
+License: GNU General Public License 2 or later
  */
 
 /*
