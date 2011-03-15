@@ -22,7 +22,7 @@
 /*
 Plugin Name: Neuf Events
 Plugin URI: http://edb.studentersamfundet.no
-Description: Behandler arrangementer. Bruk med andakt.
+Description: Manages events. Use with respect.
 Author: EDB-web
 Version: 0.2.1
 Author URI: http://edb.studentersamfundet.no/
@@ -54,18 +54,18 @@ License: GNU General Public License 2 or later
  */
 
 /**
- * Register the Arrangement post type.
+ * Register the Event post type.
  */
-add_action('init','neuf_events_post_type_arrangement');
-function neuf_events_post_type_arrangement() {
+add_action('init','neuf_events_post_type_event');
+function neuf_events_post_type_event() {
 	register_post_type( 
-		'arrangement',
+		'event',
 		array(
-			'label' => __('Arrangementer'),
-			'singular_label' => __('Arrangement'),
+			'label' => __('Events'),
+			'singular_label' => __('Event'),
 			'public' => true,
 			'publicly_queryable' => true,
-			'query_var' => 'arrangement',
+			'query_var' => 'event',
 			'show_ui' => true,
 			'capability_type' => 'post',
 			'supports' => array(
@@ -80,17 +80,17 @@ function neuf_events_post_type_arrangement() {
 				'revisions',
 				'administrator'
 			),
-			'register_meta_box_cb' => 'neuf_events_post_type_arrangement_meta_boxes',
+			'register_meta_box_cb' => 'neuf_events_post_type_event_meta_boxes',
 		)
 	);
 }
 
 /**
- * Add custom meta boxes for the Arrangement post type.
+ * Add custom meta boxes for the Event post type.
  */
-function neuf_events_post_type_arrangement_meta_boxes() {
+function neuf_events_post_type_event_meta_boxes() {
 	// add_meta_box( $id, $title, $callback, $page, $context, $priority );
-	add_meta_box('neuf_events_date_section','Tid og sted','neuf_events_date_admin_html','arrangement','side','high');
+	add_meta_box('neuf_events_date_section','Time and Place','neuf_events_date_admin_html','event','page','high');
 }
 
 /**
@@ -318,8 +318,8 @@ function neuf_events_save_start_date( $post_id ) {
 add_shortcode( 'neuf-events-program' , 'neuf_events_program');
 function neuf_events_program() {
 	global $post,$wp_locale;
-	$arrangements = new WP_Query( array(
-		'post_type' => 'arrangement',
+	$events = new WP_Query( array(
+		'post_type' => 'event',
 		'posts_per_page' => -1,
 		'meta_key' => 'neuf_events_start_date',
 		'orderby' => 'meta_value',
@@ -327,14 +327,14 @@ function neuf_events_program() {
 	) );
 	$html = '';
 
-	if ( $arrangements->have_posts() ) :
+	if ( $events->have_posts() ) :
 
 		$date = "";
 
 		$html .= '<table class="event-table">';
 
-		while ( $arrangements->have_posts() ) :
-			$arrangements->the_post();
+		while ( $events->have_posts() ) :
+			$events->the_post();
 
 			$start_date = get_post_meta( $post->ID , 'neuf_events_start_date' , true );
 			$venue = get_post_meta( $post->ID , 'neuf_events_venue' , true );
@@ -367,13 +367,13 @@ function neuf_events_program() {
 
 function get_program_ajax()
 {
-	$neuf_arrangements = new WP_Query( array(
-                    'post_type' => 'arrangement',
+	$neuf_events = new WP_Query( array(
+                    'post_type' => 'event',
                     'posts_per_page' => -1,'orderby' => 'meta_value',
                 'order' => 'ASC'
 
             ) );
-	foreach($neuf_arrangements->posts as &$post)
+	foreach($neuf_events->posts as &$post)
         {
                 $meta = get_post_custom($post->ID);
 
@@ -386,7 +386,7 @@ function get_program_ajax()
 
 	}
 	
-	echo json_encode($neuf_arrangements->posts);
+	echo json_encode($neuf_events->posts);
 	die;
 	return true;
 }
