@@ -243,10 +243,10 @@ function neuf_events_save_start_date( $post_id ) {
 
 	// verify this came from the our screen and with proper authorization,
 	// because save_post can be triggered at other times
-
-	if ( !wp_verify_nonce( $_POST['neuf_events_noncename'], plugin_basename(__FILE__) )) {
-		return $post_id;
-	}
+//var_dump($_POST['neuf_events_nouncename']);
+//	if ( !wp_verify_nonce( $_POST['neuf_events_noncename'], plugin_basename(__FILE__) )) {
+//		return $post_id;
+//	}
 
 	// verify if this is an auto save routine. If it is, our form has not been submitted, and
 	// we dont want to do anything
@@ -294,7 +294,7 @@ function neuf_events_save_start_date( $post_id ) {
 	} elseif ( $date != get_post_meta($post_id, 'neuf_events_start_date', true) ) {
 		update_post_meta($post_id, 'neuf_events_start_date', $date);
 	}
-	
+	die(get_post_meta($post_id, 'neuf_events_start_date', true));
 	// Save venue
 	if ( !get_post_meta($post_id, 'neuf_events_venue') ) {
 		add_post_meta($post_id, 'neuf_events_venue', $event_venue, true);
@@ -321,8 +321,8 @@ function neuf_events_program() {
 	$events = new WP_Query( array(
 		'post_type' => 'event',
 		'posts_per_page' => -1,
-		'meta_key' => 'neuf_events_start_date',
-		'orderby' => 'meta_value',
+		//'meta_key' => 'neuf_events_start_date',
+		//'orderby' => 'meta_value',
 		'order' => 'ASC'
 	) );
 	$html = '';
