@@ -106,7 +106,7 @@ function neuf_events_date_admin_html() {
 	$event_price = get_post_meta($post->ID, 'neuf_events_price',true);
 	$event_fb_url = get_post_meta($post->ID, 'neuf_events_fb_url', true);
 	$event_bs_url = get_post_meta($post->ID, 'neuf_events_bs_url', true);
-	//$venues = array ("Det Norske Studentersamfund", "Glassbaren", "Storsalen");
+
 
 	// Use nonce for verification
 	echo '<input type="hidden" name="neuf_events_noncename" id="neuf_events_noncename" value="' . 
