@@ -67,7 +67,17 @@ if (!class_exists("NeufEvents")) {
       function add_events_metaboxes() {
 	// Date-selection for events
 
-	/*
+        wp_register_style('timecss', plugins_url("/neuf-events/style/jquery-ui-1.8.11.custom.css", dirname(__FILE__)));
+        wp_enqueue_style('timecss');
+        wp_register_script('jqmin', plugins_url("/neuf-events/script/jquery-1.5.1.min.js", dirname(__FILE__)));
+        wp_enqueue_script('jqmin');
+        wp_register_script('jquicust', plugins_url("/neuf-events/script/jquery-ui-1.8.11.custom.min.js", dirname(__FILE__)));
+        wp_enqueue_script('jquicust');
+        wp_register_script('timepicker', plugins_url("/neuf-events/script/jquery-ui-timepicker-addon.js", dirname(__FILE__)));
+        wp_enqueue_script('timepicker');
+        wp_register_script('timedefs', plugins_url("/neuf-events/script/timepickdef.js", dirname(__FILE__)));
+        wp_enqueue_script('timedefs');
+	
 	  add_meta_box(
 	  'neuf_events_timestamps',
 	  __('Starttime'),
@@ -76,7 +86,7 @@ if (!class_exists("NeufEvents")) {
 	  'side',
 	  'high'
 	  );
-	*/
+	
 	add_meta_box(
 		     'neuf_event_type',
 		     __('Eventtype'),
@@ -91,8 +101,7 @@ if (!class_exists("NeufEvents")) {
 		     __('Venue'),
 		     'neuf_eventvenue_custom_box',
 		     'event',
-		     'side',
-		     'high'
+		     'side'
 		     );
 
 	add_meta_box(
@@ -111,25 +120,22 @@ if (!class_exists("NeufEvents")) {
       ********************************************************************************
       *******************************************************************************/
 
-      /* TODO JQUERY fra fredrls
-	 function neuf_date_custom_box() {
+     function neuf_date_custom_box() {
+     
+        global $post;
+ 
+	    $start = get_post_meta($post->ID, 'neuf_events_starttime', true);
+	    $end  = get_post_meta($post->ID, 'neuf_events_endtime', true);
 
-	 $start_date_timestamp = get_post_meta($post->ID, 'event_start_date', true);
-	 $event_end_timestamp  = get_post_meta($post->ID, 'event_end_time', true);
+        echo '<input type="text" class="datepicker" name="neuf_events_starttime" value="'.date("d.m.Y H:i", $start).'" /><br />';
+        echo $start ?
+	    'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", $start) :
+	    '<span style="color:red;">Ingen dato har blitt satt.</span><br />' ;
 
-	 echo '<input type="hidden" name="neuf_events_noncename" id="neuf_events_noncename" value="' .
-	 wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
-
-	 echo '<div id="neuf_time" style="margin-top:8px;">';
-	 echo '<label for="event_starttime">';
-	 echo $start_date_timestamp ?
-	 'N&aring;v&aelig;rende dato: '.
-	 date("j. F Y H:i", $start_date_timestamp) :
-	 '<span style="color:red;">Ingen dato har blitt satt.</span>' ;
-	 echo '<br /></label>';
+        echo '<input type="text" class="datepicker" name="neuf_events_endtime" value="'.date("d.m.Y H:i", $end).'" /><br />';
 
 	 }
-      */
+      
 
 
       /*******************************************************************************
@@ -249,16 +255,16 @@ if (!class_exists("NeufEvents")) {
 	$events_fb_url = $_POST['neuf_events_fb_url'];
 
 	// Convert time data to timestamp
-	//$startdate = strtotime( $_POST['neuf_event_end_date'] );
-	//$enddate = strtotime( $_POST['neuf_event_end_date'] );
+	$startdate = strtotime( $_POST['neuf_events_starttime'] );
+	$enddate = strtotime( $_POST['neuf_events_endtime'] );
 
-	$quicksave = array('events_price','events_bs_url','events_fb_url',);
+	$quicksave = array('price','bs_url','fb_url');
 	foreach($quicksave as $save){
-	  if( !($meta = get_post_meta($post_id, 'neuf_' . $save)))
-	    add_post_meta($post_id, 'neuf_' . $save, true);
+	  if( !($meta = get_post_meta($post_id, 'neuf_events_' . $save)))
+	    add_post_meta($post_id, 'neuf_events_' . $save, true);
 	  else if($meta != $$save)
-	    update_post_meta($post_id, 'neuf_' . $save, $$save);
-	}
+	    update_post_meta($post_id, 'neuf_events_' . $save, $$save);
+	}   
 
 	// Save venue                                                                                                                                                                                                            
 	if ( !get_post_meta($post_id, 'neuf_events_venue') ) {
@@ -273,19 +279,21 @@ if (!class_exists("NeufEvents")) {
 	  update_post_meta($post_id, 'neuf_events_type',$events_type);
 	}
 
-	return $post_id;
+	// Save timestamps
 
-	// Save timestamp
+    if ( !get_post_meta($post_id, 'neuf_events_starttime') ) 
+	    add_post_meta($post_id, 'neuf_events_starttime', $startdate, true);
+	elseif ( $startdate != get_post_meta($post_id, 'neuf_events_starttime', true) ) 
+	    update_post_meta($post_id, 'neuf_events_starttime', $startdate);
 
-	//  if ( !get_post_meta($post_id, 'neuf_events_start_date') ) 
-	//   add_post_meta($post_id, 'neuf_events_start_date', $date, true);
-	//  elseif ( $date != get_post_meta($post_id, 'neuf_events_start_date', true) ) 
-	//    update_post_meta($post_id, 'neuf_events_start_date', $date);
-	//  die(get_post_meta($post_id, 'neuf_events_start_date', true));
+    if ( !get_post_meta($post_id, 'neuf_events_endtime') ) 
+	    add_post_meta($post_id, 'neuf_events_endtime', $enddate, true);
+	elseif ( $enddate != get_post_meta($post_id, 'neuf_events_endtime', true) ) 
+	    update_post_meta($post_id, 'neuf_events_endtime', $enddate);
 
 
-	//  return $date;
-      }
+    return $neuf_events_starttime;
+    }
 
 
       /** View of the custom page */
@@ -297,8 +305,8 @@ if (!class_exists("NeufEvents")) {
 	$events = new WP_Query( array(
 				      'post_type' => 'event',
 				      'posts_per_page' => -1,
-				      //'meta_key' => 'neuf_events_start_date',
-				      //'orderby' => 'meta_value',
+				      'meta_key' => 'neuf_events_start_date',
+				      'orderby' => 'meta_value',
 				      'order' => 'ASC'
 				      ) );
 	$html = '';
