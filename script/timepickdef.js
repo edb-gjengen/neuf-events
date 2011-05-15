@@ -1,6 +1,8 @@
-$(function(){
+var $j = jQuery.noConflict();
+
+$j(function(){
 	// Datepicker
-	$('.datepicker').datetimepicker({
+	$j('.datepicker').datetimepicker({
 		currentText: 'Nå',
 		closeText: 'ferdig',
 		hourText: 'Time',
