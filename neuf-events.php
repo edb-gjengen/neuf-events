@@ -3,7 +3,7 @@
   Plugin Name: neuf-events
   Plugin URI: http://www.studentersamfundet.no
   Description: Plugin to manage events for studentersamfundet.no
-  Version 0.2
+  Version 0.2.1
   Author: EDB-web
   Author URI: http://www.studentersamfundet.no
   License: GPL v2 or later
@@ -75,15 +75,21 @@ if (!class_exists("NeufEvents")) {
         // for upgrading jQuery ui, get core, widget, mouse, slider and datepicker
         wp_register_script('custom-jqui', plugins_url("/neuf-events/script/jquery-ui-1.8.11.custom.min.js", dirname(__FILE__)));
 
+        // form validation: http://docs.jquery.com/Plugins/Validation#API_Documentation
+        wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
+        wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));
+
         wp_enqueue_style('timecss');  
         wp_enqueue_script('jquery');      
         wp_enqueue_script('custom-jqui');
         wp_enqueue_script('timepicker');
         wp_enqueue_script('timedefs');
+        wp_enqueue_script('formvalidation');
+        wp_enqueue_script('validation_rules');
  	
 	add_meta_box(
 	  'neuf_events_timestamps',
-	  __('Starttime'),
+	  __('Dato og klokkeslett'),
 	  'neuf_date_custom_box',
 	  'event',
 	  'side',
@@ -92,7 +98,7 @@ if (!class_exists("NeufEvents")) {
 	
 	add_meta_box(
 		     'neuf_event_type',
-		     __('Eventtype'),
+		     __('Arrangementstype'),
 		     'neuf_eventtype_custom_box',
 		     'event',
 		     'side',
@@ -101,7 +107,7 @@ if (!class_exists("NeufEvents")) {
 
 	add_meta_box(
 		     'neuf_eventvenue',
-		     __('Venue'),
+		     __('Sted'),
 		     'neuf_eventvenue_custom_box',
 		     'event',
 		     'side'
@@ -109,7 +115,7 @@ if (!class_exists("NeufEvents")) {
 
 	add_meta_box(
 		     'neuf_event_div',
-		     __('Eventinfo'),
+		     __('Arrangementsdetaljer'),
 		     'neuf_event_div_custom_box',
 		     'event'
 		     );
@@ -130,14 +136,21 @@ if (!class_exists("NeufEvents")) {
 	    $start = get_post_meta($post->ID, 'neuf_events_starttime', true);
 	    $end  = get_post_meta($post->ID, 'neuf_events_endtime', true);
 
+            if( $start ) {
+                echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
+	        echo 'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", intval($start));
 
-        echo '<input type="text" class="datepicker" name="neuf_events_starttime" value="'.date("d.m.Y H:i", $start).'" /><br />';
-        echo $start ?
-	    'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", $start) :
-	    '<span style="color:red;">Ingen dato har blitt satt.</span><br />' ;
+            } else {
+                echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="" /><br />';
+	        //echo '<span style="color:red;">Startdato og -klokkeslett er ikke satt.</span><br />';
 
-        echo '<input type="text" class="datepicker" name="neuf_events_endtime" value="'.date("d.m.Y H:i", $end).'" /><br />';
+            }
 
+            if( $end ) {
+                echo '<label for="neuf_events_starttime">Slutt:</label><input type="text" class="datepicker" name="neuf_events_endtime" value="'.date("d.m.Y H:i", intval($end)).'" /><br />';
+            } else {
+                echo '<label for="neuf_events_starttime">Slutt:</label><input type="text" class="datepicker" name="neuf_events_endtime" value="" /><br />';
+            }
 	 }
       
 
@@ -219,7 +232,6 @@ if (!class_exists("NeufEvents")) {
 	$event_bs = get_post_meta($post->ID, 'neuf_events_bs_url', true);
 	$event_fb = get_post_meta($post->ID, 'neuf_events_fb_url', true);
 
-	echo '<h4>Andre detaljer</h4>';
 	echo '<br />Pris:<br /><input name="neuf_events_price" value="'.$event_price.'" />';
 	echo '<br />Billettservice url:<br /><input name="neuf_events_bs_url" value="'.$event_bs.'" />';
 	echo '<br />Facebook url:<br /><input name="neuf_events_fb_url" value="'.$event_fb.'" />';
