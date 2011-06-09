@@ -37,6 +37,7 @@ if (!class_exists("NeufEvents")) {
 						   'not_found'             =>      __( 'No events found'               ),
 						   'not_found_in_trash'    =>      __( 'No events found in trash'      )
 						   ),
+				 'menu_position'       =>  5,
 				 'public'              =>  true,
 				 'publicly_queryable'  =>  true,
 				 'query_var'           =>  'event',
@@ -137,12 +138,12 @@ if (!class_exists("NeufEvents")) {
 	    $end  = get_post_meta($post->ID, 'neuf_events_endtime', true);
 
             if( $start ) {
-                echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
-	        echo 'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", intval($start));
+	        echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
+	        echo 'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", intval($start))."<br />";
 
             } else {
                 echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="" /><br />';
-	        //echo '<span style="color:red;">Startdato og -klokkeslett er ikke satt.</span><br />';
+	        echo '<span style="color:red;">Startdato og -klokkeslett er ikke satt.</span><br />';
 
             }
 
@@ -203,17 +204,18 @@ if (!class_exists("NeufEvents")) {
 	echo 'Sted:';
 	echo '<select name="neuf_events_venue">';
 
-	$venues = array ("Det Norske Studentersamfund", "Glassbaren", "Storsalen", "Biblioteket", "BokCafeen");
+	$venues = query_posts( array('post_type' => 'venue', 'posts_per_page' => -1, 'order' => 'ASC'));
 	echo $neuf_event_venue;
-
+	
 	foreach ($venues as $venue) {
-	  echo '<option value="'.$venue.'"';
-	  if($venue == $neuf_event_venue)
-	    echo ' selected="selected"';
-	  echo '>'.$venue.'</option>';
+	  if ($venue->post_title != '' ){
+	    echo '<option value="'.$venue->post_title.'"';
+	    if($venue->post_title == $neuf_event_venue)
+	      echo ' selected="selected"';
+	    echo '>'.$venue->post_title.'</option>';
+	  }
 	}
 	echo '</select>';
-
       }
 
 
@@ -228,15 +230,19 @@ if (!class_exists("NeufEvents")) {
 
 	global $post;
 
-	$event_price = get_post_meta($post->ID, 'neuf_events_price', true);
-	$event_bs = get_post_meta($post->ID, 'neuf_events_bs_url', true);
+	$event_price = get_post_meta($post->ID, 'neuf_events_price') ? get_post_meta($post->ID, 'neuf_events_price', true) : "0";
+	$event_bs = get_post_meta($post->ID, 'neuf_events_bs_url') ? get_post_meta($post->ID, 'neuf_events_bs_url', true) : "0";
 	$event_fb = get_post_meta($post->ID, 'neuf_events_fb_url', true);
+	
+	
 
-	echo '<br />Pris:<br /><input name="neuf_events_price" value="'.$event_price.'" />';
-	echo '<br />Billettservice url:<br /><input name="neuf_events_bs_url" value="'.$event_bs.'" />';
-	echo '<br />Facebook url:<br /><input name="neuf_events_fb_url" value="'.$event_fb.'" />';
+	echo '<br />Pris:<br /><input name="neuf_events_price" type="text"y value="'.$event_price.'" />';
+	echo '<br />Billettservice url:<br /><input type="text" name="neuf_events_bs_url" value="'.$event_bs.'" />';
+	echo '<br />Facebook url:<br /><input type="text" name="neuf_events_fb_url" value="'.$event_fb.'" />';
 	echo '<p style="font-style:italic;">(bare la feltene stå tomme om de ikke er relevante)</p>';
 	echo '</div> <!-- #neuf_events_time -->';
+
+	
 
       }
 
