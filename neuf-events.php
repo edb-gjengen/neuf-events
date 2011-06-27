@@ -74,8 +74,8 @@ if (!class_exists("NeufEvents")) {
        wp_register_script('custom-jqui', plugins_url("/neuf-events/script/jquery-ui-1.8.11.custom.min.js", dirname(__FILE__)));
 
         // form validation: http://docs.jquery.com/Plugins/Validation#API_Documentation
-     /*   wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
-        wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));*/
+        wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
+        wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));
 
         wp_enqueue_style('timecss');  
         wp_enqueue_script('jquery');      
@@ -352,8 +352,10 @@ if ( isset($neuf_event_object)){
   */
   add_action(       'init',                 'neuf_events_post_type');
   add_action(       'save_post',            'neuf_events_save_info');
+  
+  add_action(		'publish_neuf_events', 'neuf_events_publish');
+  
   add_shortcode(    'neuf-events-program',  'neuf_events_program');
-
 }
 
 ?>
