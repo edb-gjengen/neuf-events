@@ -16,4 +16,5 @@ $j(function(){
 		dayNamesShort: ['søn','man','tir','ons','tor','fre','lør'],
 		dayNamesMin: ['sø','ma','ti','on','to','fr','lø']
 	});
+	
 });

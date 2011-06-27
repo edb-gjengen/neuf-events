@@ -65,17 +65,17 @@ if (!class_exists("NeufEvents")) {
       function add_events_metaboxes() {
 	// Date-selection for events
 
-        wp_register_style('timecss', plugins_url("/neuf-events/style/jquery-ui-1.8.12.custom.css", dirname(__FILE__)));
+      wp_register_style('timecss', plugins_url("/neuf-events/style/jquery-ui-1.8.12.custom.css", dirname(__FILE__)));
         
         wp_register_script('timepicker', plugins_url("/neuf-events/script/jquery-ui-timepicker-addon.js", dirname(__FILE__)));
         wp_register_script('timedefs', plugins_url("/neuf-events/script/timepickdef.js", dirname(__FILE__)));
         
         // for upgrading jQuery ui, get core, widget, mouse, slider and datepicker
-        wp_register_script('custom-jqui', plugins_url("/neuf-events/script/jquery-ui-1.8.11.custom.min.js", dirname(__FILE__)));
+       wp_register_script('custom-jqui', plugins_url("/neuf-events/script/jquery-ui-1.8.11.custom.min.js", dirname(__FILE__)));
 
         // form validation: http://docs.jquery.com/Plugins/Validation#API_Documentation
-        wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
-        wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));
+     /*   wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
+        wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));*/
 
         wp_enqueue_style('timecss');  
         wp_enqueue_script('jquery');      
@@ -126,29 +126,37 @@ if (!class_exists("NeufEvents")) {
       **  Start and endtime metabox   ************************************************
       ********************************************************************************
       *******************************************************************************/
-
+	/*
+	 * Jquery datetimepickers is loaded in scripts/timepickdef.js
+	 */
+	 
      function neuf_date_custom_box() {
      
         global $post;
  
 	    $start = get_post_meta($post->ID, 'neuf_events_starttime', true);
 	    $end  = get_post_meta($post->ID, 'neuf_events_endtime', true);
-
+	    
+	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' );
+		
             if( $start ) {
-	        echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
+	        echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime"  value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
 	        echo 'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", intval($start))."<br />";
 
             } else {
-                echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" id="neuf_events_starttime" value="" /><br />';
+                echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" value="" /><br />';
 	        echo '<span style="color:red;">Startdato og -klokkeslett er ikke satt.</span><br />';
 
             }
 
             if( $end ) {
-                echo '<label for="neuf_events_starttime">Slutt:</label><input type="text" class="datepicker" name="neuf_events_endtime" value="'.date("d.m.Y H:i", intval($end)).'" /><br />';
+                echo '<label for="neuf_events_endtime">Slutt:</label><input name="neuf_events_endtime" type="text" class="datepicker" value="'.date("d.m.Y H:i", intval($end)).'" /><br />';
             } else {
-                echo '<label for="neuf_events_starttime">Slutt:</label><input type="text" class="datepicker" name="neuf_events_endtime" value="" /><br />';
+                echo '<label for="neuf_events_endtime">Slutt:</label><input name="neuf_events_endtime" type="text" class="datepicker" value="" /><br />';
             }
+            
+            ?>
+            <?php
 	 }
       
 
@@ -223,25 +231,25 @@ if (!class_exists("NeufEvents")) {
       *******************************************************************************/
 
 
-      function neuf_event_div_custom_box(){
+	function neuf_event_div_custom_box(){
 
-	global $post;
+		global $post;
 
-	$event_price = get_post_meta($post->ID, 'neuf_events_price') ? get_post_meta($post->ID, 'neuf_events_price', true) : "0";
-	$event_bs = get_post_meta($post->ID, 'neuf_events_bs_url') ? get_post_meta($post->ID, 'neuf_events_bs_url', true) : "0";
-	$event_fb = get_post_meta($post->ID, 'neuf_events_fb_url', true);
-	
-	
+		$event_price = get_post_meta($post->ID, 'neuf_events_price') ? get_post_meta($post->ID, 'neuf_events_price', true) : "";
+		$event_bs = get_post_meta($post->ID, 'neuf_events_bs_url') ? get_post_meta($post->ID, 'neuf_events_bs_url', true) : "";
+		$event_fb = get_post_meta($post->ID, 'neuf_events_fb_url', true);
 
-	echo '<br />Pris:<br /><input name="neuf_events_price" type="text"y value="'.$event_price.'" />';
-	echo '<br />Billettservice url:<br /><input type="text" name="neuf_events_bs_url" value="'.$event_bs.'" />';
-	echo '<br />Facebook url:<br /><input type="text" name="neuf_events_fb_url" value="'.$event_fb.'" />';
-	echo '<p style="font-style:italic;">(bare la feltene stå tomme om de ikke er relevante)</p>';
-//	echo '</div> <!-- #neuf_events_time -->'; //tror det er denne som bugger opp div'ene
 
-	
 
-      }
+		echo '<br />Pris:<br /><input name="neuf_events_price" type="text"y value="'.$event_price.'" />';
+		echo '<br />Billettservice url:<br /><input type="text" name="neuf_events_bs_url" value="'.$event_bs.'" />';
+		echo '<br />Facebook url:<br /><input type="text" name="neuf_events_fb_url" value="'.$event_fb.'" />';
+		echo '<p style="font-style:italic;">(bare la feltene stå tomme om de ikke er relevante)</p>';
+		//	echo '</div> <!-- #neuf_events_time -->'; //tror det er denne som bugger opp div'ene
+
+
+
+	}
 
 
       /**
@@ -250,68 +258,37 @@ if (!class_exists("NeufEvents")) {
 
 
       function neuf_events_save_info( $post_id ) {
+     
+		// verify this came from the our screen and with proper authorization,
+		// because save_post can be triggered at other times
 
-	// verify this came from the our screen and with proper authorization,
-	// because save_post can be triggered at other times
+		if ( !wp_verify_nonce( $_POST['neuf_events_nonce'], 'neuf_events_nonce' )) {
+				return $post_id;
+		}
 
-	//	if ( !wp_verify_nonce( $_POST['neuf_events_noncename'], plugin_basename(__FILE__) )) {
-	//		return $post_id;
-	//	}
+		// verify if this is an auto save routine. If it is, our form has not been submitted, and
+		// we dont want to do anything
+	
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )  return $post_id;
 
-	// verify if this is an auto save routine. If it is, our form has not been submitted, and
-	// we dont want to do anything
-
-	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )  return $post_id;
-
-	// Check permissions
-	if ( !current_user_can( 'edit_post', $post_id ) ) return $post_id;
-
-	// Get posted data
-	$events_venue = $_POST['neuf_events_venue'];
-	$events_type = $_POST['neuf_events_type'];
-	$events_price = $_POST['neuf_events_price'];
-	$events_bs_url = $_POST['neuf_events_bs_url'];
-	$events_fb_url = $_POST['neuf_events_fb_url'];
-
-	// Convert time data to timestamp
-	$startdate = strtotime( $_POST['neuf_events_starttime'] );
-	$enddate = strtotime( $_POST['neuf_events_endtime'] );
-
-	$quicksave = array('events_price','events_bs_url','events_fb_url');
-	foreach($quicksave as $save){
-	  if( !($meta = get_post_meta($post_id, 'neuf_' . $save)))
-	    add_post_meta($post_id, 'neuf_' . $save, true);
-	  else if($meta != $$save)
-	    update_post_meta($post_id, 'neuf_' . $save, $$save);
-	}   
-
-	// Save venue                                                                                                                                                                                                            
-	if ( !get_post_meta($post_id, 'neuf_events_venue') ) {
-	  add_post_meta($post_id, 'neuf_events_venue', $events_venue, true);
-	} elseif ( $events_venue != get_post_meta($post_id, 'neuf_events_venue', true) ) {
-	  update_post_meta($post_id, 'neuf_events_venue', $events_venue);
-	}
-
-	if ( !get_post_meta($post_id, 'neuf_events_type') ) {
-	  add_post_meta($post_id, 'neuf_events_type', $events_type, true);
-	}elseif($events_type != get_post_meta($post_id, 'neuf_events_type', true)){
-	  update_post_meta($post_id, 'neuf_events_type',$events_type);
-	}
-
-	// Save timestamps
-
-    if ( !get_post_meta($post_id, 'neuf_events_starttime') ) 
-	    add_post_meta($post_id, 'neuf_events_starttime', $startdate, true);
-	elseif ( $startdate != get_post_meta($post_id, 'neuf_events_starttime', true) ) 
-	    update_post_meta($post_id, 'neuf_events_starttime', $startdate);
-
-    if ( !get_post_meta($post_id, 'neuf_events_endtime') ) 
-	    add_post_meta($post_id, 'neuf_events_endtime', $enddate, true);
-	elseif ( $enddate != get_post_meta($post_id, 'neuf_events_endtime', true) ) 
-	    update_post_meta($post_id, 'neuf_events_endtime', $enddate);
-
-
-    return $neuf_events_starttime;
+		// Check permissions
+		if ( !current_user_can( 'edit_post', $post_id ) ) return $post_id;
+	
+		// Date strings are converted to unix time
+      	$tosave['neuf_events_starttime'] = strtotime( $_POST['neuf_events_starttime'] );
+      	$tosave['neuf_events_endtime'] = strtotime( $_POST['neuf_events_endtime'] );
+      	$tosave['neuf_events_price'] = $_POST['neuf_events_price'];
+      	$tosave['neuf_events_bs_url'] = $_POST['neuf_events_bs_url'];
+      	$tosave['neuf_events_fb_url'] = $_POST['neuf_events_fb_url'];
+      	$tosave['neuf_events_type'] = $_POST['neuf_events_type'];
+      	$tosave['neuf_events_venue'] = $_POST['neuf_events_venue'];
+      	
+      	// Update or add post meta
+      	foreach($tosave as $key=>$value)
+      		if(!update_post_meta($post_id, $key, $value))
+      			add_post_meta($post_id, $key, $value, true);
+      	
+		return $post_id;
     }
 
 
