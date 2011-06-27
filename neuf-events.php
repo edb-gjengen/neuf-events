@@ -8,9 +8,6 @@
   Author URI: http://www.studentersamfundet.no
   License: GPL v2 or later
 */
-?>
-
-<?php
 
 if (!class_exists("NeufEvents")) {
 
@@ -240,7 +237,7 @@ if (!class_exists("NeufEvents")) {
 	echo '<br />Billettservice url:<br /><input type="text" name="neuf_events_bs_url" value="'.$event_bs.'" />';
 	echo '<br />Facebook url:<br /><input type="text" name="neuf_events_fb_url" value="'.$event_fb.'" />';
 	echo '<p style="font-style:italic;">(bare la feltene stå tomme om de ikke er relevante)</p>';
-	echo '</div> <!-- #neuf_events_time -->';
+//	echo '</div> <!-- #neuf_events_time -->'; //tror det er denne som bugger opp div'ene
 
 	
 
