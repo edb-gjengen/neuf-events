@@ -323,11 +323,11 @@ if (!class_exists("NeufEvents")) {
 
 
 	$html .= '    <tr>';
-	$html .= '        <td class="time" style="width:10%;">' . date("H:i d.m", $time) . '</td>';
-	$html .= '        <td class="price" style="width:10%;">' . $price . '</td>';
+	$html .= '		  <td class="day">' . $dager[date('w', $time)] . '</td>';
+	$html .= '        <td class="time" style="width:10%;">' . date("H:i", $time) . '</td>';
 	$html .= '        <td class="title" style="padding-right:10px;"><a href="' . get_permalink() . '">' . get_the_title() . '</a></td>';
-	$html .= '        <td class="type" style="font-size:smaller;">' . $type . '</td>';
-	$html .= '        <td class="place" style="width:27%;padding-left:10px;">' . $venue . '</td>';
+//	$html .= '        <td class="type" style="font-size:smaller;">' . $type . '</td>';
+//	$html .= '        <td class="place" style="width:27%;padding-left:10px;">' . $venue . '</td>';
 	$html .= '    </tr>';
 	endwhile;
 
