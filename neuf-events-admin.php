@@ -1,5 +1,45 @@
 <?php
 
+/* Add custom columns. */
+function change_columns( $cols ) {
+	$custom_cols = array(
+		'cb' => '<input type="checkbox" />',
+		'starttime' => __( 'Dato og klokkeslett', 'trans' ),
+		'endtime' => __( 'Sluttdato og -klokkeslett', 'trans' ),
+	);
+	return array_merge($cols, $custom_cols);
+}
+add_filter( "manage_event_posts_columns", "change_columns" );
+
+// Add values to the custom columns
+function custom_columns( $column, $post_id ) {
+	switch ( $column ) {
+	case "starttime":
+		$starttime = get_post_meta( $post_id, 'neuf_events_starttime', true);
+		echo date_i18n(get_option('date_format') . " k\l. " .get_option('time_format'), $starttime );
+		break;
+	case "endtime":
+		$endtime = get_post_meta( $post_id, 'neuf_events_endtime', true);
+		if( $endtime ) {
+			echo date_i18n(get_option('date_format') . " k\l. " .get_option('time_format'), $endtime );
+		} else {
+			echo __("Ikke satt");
+		}
+		break;
+	}
+}
+add_action( "manage_posts_custom_column", "custom_columns", 10, 2 );
+
+// Make these columns sortable
+function sortable_columns( $cols ) {
+	$custom_cols = array(
+		'starttime' => 'starttime',
+		'endtime' => 'endtime',
+	);
+	return array_merge($cols, $custom_cols);
+}
+add_filter( "manage_edit-event_sortable_columns", "sortable_columns" );
+
 /* Add metaboxes (with styles) */
 function add_events_metaboxes() {
 	// Date-selection for events
