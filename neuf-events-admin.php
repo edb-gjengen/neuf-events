@@ -15,11 +15,11 @@ add_filter( "manage_event_posts_columns", "change_columns" );
 function custom_columns( $column, $post_id ) {
 	switch ( $column ) {
 	case "starttime":
-		$starttime = get_post_meta( $post_id, 'neuf_events_starttime', true);
+		$starttime = get_post_meta( $post_id, '_neuf_events_starttime', true);
 		echo date_i18n(get_option('date_format') . " k\l. " .get_option('time_format'), $starttime );
 		break;
 	case "endtime":
-		$endtime = get_post_meta( $post_id, 'neuf_events_endtime', true);
+		$endtime = get_post_meta( $post_id, '_neuf_events_endtime', true);
 		if( $endtime ) {
 			echo date_i18n(get_option('date_format') . " k\l. " .get_option('time_format'), $endtime );
 		} else {
@@ -64,7 +64,7 @@ function add_events_metaboxes() {
 
 	add_meta_box(
 		'neuf_events_timestamps',
-		__('Dato og klokkeslett'),
+		__('Arrangementsdetaljer'),
 		'neuf_date_custom_box',
 		'event',
 		'side',
@@ -72,25 +72,8 @@ function add_events_metaboxes() {
 	);
 
 	add_meta_box(
-		'neuf_event_type',
-		__('Arrangementstype'),
-		'neuf_eventtype_custom_box',
-		'event',
-		'side',
-		'high'
-	);
-
-	add_meta_box(
-		'neuf_eventvenue',
-		__('Sted'),
-		'neuf_eventvenue_custom_box',
-		'event',
-		'side'
-	);
-
-	add_meta_box(
 		'neuf_event_div',
-		__('Arrangementsdetaljer'),
+		__('Ymse arrangementsdetaljer'),
 		'neuf_event_div_custom_box',
 		'event'
 	);
@@ -103,37 +86,44 @@ function add_events_metaboxes() {
  */
 function neuf_date_custom_box() {
 	global $post;
+	echo '<div class="misc-pub-section">';
 
-	$start = get_post_meta($post->ID, 'neuf_events_starttime', true);
-	$end  = get_post_meta($post->ID, 'neuf_events_endtime', true);
+	$start = get_post_meta($post->ID, '_neuf_events_starttime', true);
+	$end  = get_post_meta($post->ID, '_neuf_events_endtime', true);
 
 	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' );
 
 	if( $start ) {
-		echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime"  value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
-		echo 'N&aring;v&aelig;rende dato: '.date("d.m.Y H:i", intval($start))."<br />";
+		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
 
 	} else {
-		echo '<label for="neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="neuf_events_starttime" value="" /><br />';
+		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime" value="" /><br />';
 		echo '<span style="color:red;">Startdato og -klokkeslett er ikke satt.</span><br />';
 
 	}
 
 	if( $end ) {
-		echo '<label for="neuf_events_endtime">Slutt:</label><input name="neuf_events_endtime" type="text" class="datepicker" value="'.date("d.m.Y H:i", intval($end)).'" /><br />';
+		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="'.date("d.m.Y H:i", intval($end)).'" /><br />';
 	} else {
-		echo '<label for="neuf_events_endtime">Slutt:</label><input name="neuf_events_endtime" type="text" class="datepicker" value="" /><br />';
+		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="" /><br />';
 	}
+	echo '</div>';
+	echo '<div class="misc-pub-section">';
+	neuf_event_type();
+	echo '</div>';
+	echo '<div class="misc-pub-section misc-pub-section-last">';
+	neuf_event_venue();
+	echo '</div>';
 }
 
 /* Event type metabox */
-function neuf_eventtype_custom_box(){
+function neuf_event_type(){
 	global $post;
 
-	$neuf_event_type = get_post_meta($post->ID, 'neuf_events_type', true);
+	$neuf_event_type = get_post_meta($post->ID, '_neuf_events_type', true);
 
 	echo "Type:";
-	echo '<select name="neuf_events_type">';
+	echo '<select name="_neuf_events_type">';
 	echo $neuf_event_type;
 
 	$types = array(
@@ -152,40 +142,45 @@ function neuf_eventtype_custom_box(){
 }
 
 /* Venue metabox */
-function neuf_eventvenue_custom_box(){
+function neuf_event_venue(){
 	global $post;
 
-	$neuf_event_venue = get_post_meta($post->ID, 'neuf_events_venue', true);
+        $venues = array(
+	    'Betong', 'Betonghaven','Biblioteket', 'BokCaféen',
+	    'Klubbscenen', 'Lillesalen', 'Teaterscenen', 'Storsalen',
+	);
+        
+	$neuf_event_venue = get_post_meta($post->ID, '_neuf_events_venue', true);
 
-	echo 'Sted:';
-	echo '<select name="neuf_events_venue">';
-
-	$venues = query_posts( array('post_type' => 'venue', 'posts_per_page' => -1, 'order' => 'ASC'));
-	echo $neuf_event_venue;
+	echo 'Sted: ';
+	echo '<select name="_neuf_events_venue">';
 
 	foreach ($venues as $venue) {
-		if ($venue->post_title != '' ){
-			echo '<option value="'.$venue->post_title.'"';
-			if($venue->post_title == $neuf_event_venue)
-				echo ' selected="selected"';
-			echo '>'.$venue->post_title.'</option>';
-		}
+	    echo '<option value="'.$venue.'"';
+	    if($venue == $neuf_event_venue) {
+		    echo ' selected="selected"';
+	    }
+	    echo '>'.$venue.'</option>';
 	}
-	echo '</select>';
+	echo '<option vlaue="Annet">Annet</option>';
+	echo '</select><br />';
 }
 
 /* Metabox with additional info. */
 function neuf_event_div_custom_box(){
 	global $post;
 
-	$event_price = get_post_meta($post->ID, 'neuf_events_price') ? get_post_meta($post->ID, 'neuf_events_price', true) : "";
-	$event_bs = get_post_meta($post->ID, 'neuf_events_bs_url') ? get_post_meta($post->ID, 'neuf_events_bs_url', true) : "";
-	$event_fb = get_post_meta($post->ID, 'neuf_events_fb_url', true);
+	$event_price = get_post_meta($post->ID, '_neuf_events_price') ? get_post_meta($post->ID, '_neuf_events_price', true) : "";
+	$event_bs = get_post_meta($post->ID, '_neuf_events_bs_url') ? get_post_meta($post->ID, '_neuf_events_bs_url', true) : "";
+	$event_fb = get_post_meta($post->ID, '_neuf_events_fb_url', true);
 
-	echo '<br />Pris:<br /><input name="neuf_events_price" type="text"y value="'.$event_price.'" />';
-	echo '<br />Billettservice url:<br /><input type="text" name="neuf_events_bs_url" value="'.$event_bs.'" />';
-	echo '<br />Facebook url:<br /><input type="text" name="neuf_events_fb_url" value="'.$event_fb.'" />';
-	echo '<p style="font-style:italic;">(bare la feltene stå tomme om de ikke er relevante)</p>';
+	echo '<div class="misc-pub-section">';
+	echo 'Pris: <input name="_neuf_events_price" type="text"y value="'.$event_price.'" /><br />';
+	echo 'Billettservice adresse: <input type="text" name="_neuf_events_bs_url" value="'.$event_bs.'" /><br />';
+	echo '</div>';
+	echo '<div class="misc-pub-section misc-pub-section-last">';
+	echo 'Facebook addresse: <input type="text" name="_neuf_events_fb_url" value="'.$event_fb.'" />';
+	echo '</div>';
 }
 
 ?>

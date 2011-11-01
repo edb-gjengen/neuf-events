@@ -70,13 +70,13 @@ function neuf_events_save_info( $post_id ) {
 	if ( !current_user_can( 'edit_post', $post_id ) ) return $post_id;
 
 	// Date strings are converted to unix time
-	$tosave['neuf_events_starttime'] = strtotime( $_POST['neuf_events_starttime'] );
-	$tosave['neuf_events_endtime'] = strtotime( $_POST['neuf_events_endtime'] );
-	$tosave['neuf_events_price'] = $_POST['neuf_events_price'];
-	$tosave['neuf_events_bs_url'] = $_POST['neuf_events_bs_url'];
-	$tosave['neuf_events_fb_url'] = $_POST['neuf_events_fb_url'];
-	$tosave['neuf_events_type'] = $_POST['neuf_events_type'];
-	$tosave['neuf_events_venue'] = $_POST['neuf_events_venue'];
+	$tosave['_neuf_events_starttime'] = strtotime( $_POST['_neuf_events_starttime'] );
+	$tosave['_neuf_events_endtime'] = strtotime( $_POST['_neuf_events_endtime'] );
+	$tosave['_neuf_events_price'] = $_POST['_neuf_events_price'];
+	$tosave['_neuf_events_bs_url'] = $_POST['_neuf_events_bs_url'];
+	$tosave['_neuf_events_fb_url'] = $_POST['_neuf_events_fb_url'];
+	$tosave['_neuf_events_type'] = $_POST['_neuf_events_type'];
+	$tosave['_neuf_events_venue'] = $_POST['_neuf_events_venue'];
 
 	// Update or add post meta
 	foreach($tosave as $key=>$value)
@@ -94,7 +94,7 @@ function neuf_events_program() {
 	$events = new WP_Query( array(
 		'post_type' => 'event',
 		'posts_per_page' => -1,
-		'meta_key' => 'neuf_events_starttime',
+		'meta_key' => '_neuf_events_starttime',
 		'orderby' => 'meta_value',
 		'order' => 'ASC'
 	) );
@@ -106,10 +106,10 @@ function neuf_events_program() {
 		echo '<table class="event-table">';
 
 		while ( $events->have_posts() ) : $events->the_post();
-			$venue = get_post_meta( $post->ID, 'neuf_events_venue', true);
-			$type  = get_post_meta( $post->ID, 'neuf_events_type', true);
-			$price = get_post_meta( $post->ID, 'neuf_events_price', true);
-			$time = get_post_meta( $post->ID, 'neuf_events_starttime', true);
+			$venue = get_post_meta( $post->ID, '_neuf_events_venue', true);
+			$type  = get_post_meta( $post->ID, '_neuf_events_type', true);
+			$price = get_post_meta( $post->ID, '_neuf_events_price', true);
+			$time = get_post_meta( $post->ID, '_neuf_events_starttime', true);
 			?>
 			<tr>
 				<td class="day">
