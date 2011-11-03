@@ -15,13 +15,13 @@ add_filter( "manage_event_posts_columns", "change_columns" );
 function custom_columns( $column, $post_id ) {
 	switch ( $column ) {
 	case "starttime":
-		$starttime = get_post_meta( $post_id, '_neuf_events_starttime', true);
-		echo date_i18n(get_option('date_format') . " k\l. " .get_option('time_format'), $starttime );
+		$starttime = intval(get_post_meta( $post_id, '_neuf_events_starttime', true));
+		echo format_datetime($starttime);
 		break;
 	case "endtime":
-		$endtime = get_post_meta( $post_id, '_neuf_events_endtime', true);
+		$endtime = intval(get_post_meta( $post_id, '_neuf_events_endtime', true));
 		if( $endtime ) {
-			echo date_i18n(get_option('date_format') . " k\l. " .get_option('time_format'), $endtime );
+			echo format_datetime($endtime);
 		} else {
 			echo __("Ikke satt");
 		}
@@ -94,16 +94,14 @@ function neuf_date_custom_box() {
 	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' );
 
 	if( $start ) {
-		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="'.date("d.m.Y H:i", intval($start)).'" /><br />';
+		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="'.format_datetime($start).'" /><br />';
 
 	} else {
 		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime" value="" /><br />';
-		echo '<span style="color:red;">Startdato og -klokkeslett er ikke satt.</span><br />';
-
 	}
 
 	if( $end ) {
-		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="'.date("d.m.Y H:i", intval($end)).'" /><br />';
+		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="'.format_datetime($end).'" /><br />';
 	} else {
 		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="" /><br />';
 	}
@@ -145,22 +143,20 @@ function neuf_event_type(){
 function neuf_event_venue(){
 	global $post;
 
-        $venues = array(
-	    'Betong', 'Betonghaven','Biblioteket', 'BokCaféen',
-	    'Klubbscenen', 'Lillesalen', 'Teaterscenen', 'Storsalen',
+	$venues = array(
+		'Betong', 'Betonghaven','Biblioteket', 'BokCaféen',
+		'Klubbscenen', 'Lillesalen', 'Teaterscenen', 'Storsalen',
 	);
-        
 	$neuf_event_venue = get_post_meta($post->ID, '_neuf_events_venue', true);
-
 	echo 'Sted: ';
 	echo '<select name="_neuf_events_venue">';
 
 	foreach ($venues as $venue) {
-	    echo '<option value="'.$venue.'"';
-	    if($venue == $neuf_event_venue) {
-		    echo ' selected="selected"';
-	    }
-	    echo '>'.$venue.'</option>';
+		echo '<option value="'.$venue.'"';
+		if($venue == $neuf_event_venue) {
+			echo ' selected="selected"';
+		}
+		echo '>'.$venue.'</option>';
 	}
 	echo '<option vlaue="Annet">Annet</option>';
 	echo '</select><br />';
@@ -181,6 +177,13 @@ function neuf_event_div_custom_box(){
 	echo '<div class="misc-pub-section misc-pub-section-last">';
 	echo 'Facebook addresse: <input type="text" name="_neuf_events_fb_url" value="'.$event_fb.'" />';
 	echo '</div>';
+}
+
+/* Format a unix timestamp respecting the options set in Settings->General. */
+if(!function_exists('format_datetime')) {
+	function format_datetime($timestamp) {
+		return date_i18n(get_option('date_format')." ".get_option('time_format'), intval($timestamp));
+	}
 }
 
 ?>

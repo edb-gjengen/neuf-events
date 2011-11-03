@@ -101,16 +101,16 @@ function neuf_events_program() {
 
 	if ( $events->have_posts() ) :
 		$date = "";
-		ob_start();
+	ob_start();
 
-		echo '<table class="event-table">';
+	echo '<table class="event-table">';
 
-		while ( $events->have_posts() ) : $events->the_post();
-			$venue = get_post_meta( $post->ID, '_neuf_events_venue', true);
-			$type  = get_post_meta( $post->ID, '_neuf_events_type', true);
-			$price = get_post_meta( $post->ID, '_neuf_events_price', true);
-			$time = get_post_meta( $post->ID, '_neuf_events_starttime', true);
-			?>
+	while ( $events->have_posts() ) : $events->the_post();
+		$venue = get_post_meta( $post->ID, '_neuf_events_venue', true);
+		$type  = get_post_meta( $post->ID, '_neuf_events_type', true);
+		$price = get_post_meta( $post->ID, '_neuf_events_price', true);
+		$time = get_post_meta( $post->ID, '_neuf_events_starttime', true);
+		?>
 			<tr>
 				<td class="day">
 					<?php echo date('l d. F', $time); ?>
@@ -128,15 +128,15 @@ function neuf_events_program() {
 					<?php echo $venue;?>
 				</td>
 			</tr>
-			<?php
-		endwhile;
+	<?php
+	endwhile;
 
-		echo '</table><!-- .event-table -->';
-	endif;
+	echo '</table><!-- .event-table -->';
+endif;
 
-	$html = ob_get_contents();
-	ob_end_clean();
-	return $html;
+$html = ob_get_contents();
+ob_end_clean();
+return $html;
 }
 
 /* Register the event post type */
