@@ -25,7 +25,7 @@ function custom_columns( $column, $post_id ) {
 		break;
 	case "endtime":
 		$endtime = intval(get_post_meta( $post_id, '_neuf_events_endtime', true));
-		echo isset($endtime) ? format_datetime($endtime) : __("Ikke satt");
+		echo $endtime ? format_datetime($endtime) : __("Ikke satt");
 		break;
 	case "type":
 		echo get_post_meta( $post_id, '_neuf_events_type', true);
