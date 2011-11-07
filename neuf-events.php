@@ -2,7 +2,7 @@
 /*
   Plugin Name: neuf-events
   Plugin URI: http://www.studentersamfundet.no
-  Description: Plugin to manage events for studentersamfundet.no
+  Description: Events custom post type
   Version 0.2.1
   Author: EDB-web
   Author URI: http://www.studentersamfundet.no

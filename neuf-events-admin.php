@@ -4,10 +4,15 @@
 function change_columns( $cols ) {
 	$custom_cols = array(
 		'cb' => '<input type="checkbox" />',
+		'title' => __( 'Tittel', 'trans' ),
+		'author' => __( 'Forfatter', 'trans' ),
+		'date' => __( 'Publiseringsdato', 'trans' ),
+		'type' => __( 'Type', 'trans' ),
+		'venue' => __( 'Sted', 'trans' ),
 		'starttime' => __( 'Dato og klokkeslett', 'trans' ),
 		'endtime' => __( 'Sluttdato og -klokkeslett', 'trans' ),
 	);
-	return array_merge($cols, $custom_cols);
+	return $custom_cols;
 }
 add_filter( "manage_event_posts_columns", "change_columns" );
 
@@ -20,11 +25,13 @@ function custom_columns( $column, $post_id ) {
 		break;
 	case "endtime":
 		$endtime = intval(get_post_meta( $post_id, '_neuf_events_endtime', true));
-		if( $endtime ) {
-			echo format_datetime($endtime);
-		} else {
-			echo __("Ikke satt");
-		}
+		echo isset($endtime) ? format_datetime($endtime) : __("Ikke satt");
+		break;
+	case "type":
+		echo get_post_meta( $post_id, '_neuf_events_type', true);
+		break;
+	case "venue":
+		echo get_post_meta( $post_id, '_neuf_events_venue', true);
 		break;
 	}
 }
@@ -35,6 +42,8 @@ function sortable_columns( $cols ) {
 	$custom_cols = array(
 		'starttime' => 'starttime',
 		'endtime' => 'endtime',
+		'type' => 'type',
+		'venue' => 'venue',
 	);
 	return array_merge($cols, $custom_cols);
 }
