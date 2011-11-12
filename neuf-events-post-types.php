@@ -22,14 +22,14 @@ function neuf_events_post_type() {
 	register_post_type(
 		'event',
 		array(
-			'labels'				=> $labels,
-			'menu_position'			=>  5,
-			'public'				=>  true,
-			'publicly_queryable'	=>  true,
-			'query_var'				=>  'event',
-			'show_ui'				=>  true,
-			'capability_type'		=>  'post',
-			'supports'				=>  array(
+			'labels'             => $labels,
+			'menu_position'      => 5,
+			'public'             => true,
+			'publicly_queryable' => true,
+			'query_var'          => 'event',
+			'show_ui'            => true,
+			'capability_type'    => 'post',
+			'supports'           => array(
 				'title',
 				'editor',
 				'author',
@@ -66,7 +66,6 @@ function neuf_events_save_info( $post_id ) {
 	$tosave['_neuf_events_price'] = $_POST['_neuf_events_price'];
 	$tosave['_neuf_events_bs_url'] = $_POST['_neuf_events_bs_url'];
 	$tosave['_neuf_events_fb_url'] = $_POST['_neuf_events_fb_url'];
-	$tosave['_neuf_events_type'] = $_POST['_neuf_events_type'];
 	$tosave['_neuf_events_venue'] = $_POST['_neuf_events_venue'];
 
 	// Update or add post meta
@@ -98,7 +97,6 @@ function neuf_events_program() {
 
 	while ( $events->have_posts() ) : $events->the_post();
 		$venue = get_post_meta( $post->ID, '_neuf_events_venue', true);
-		$type  = get_post_meta( $post->ID, '_neuf_events_type', true);
 		$price = get_post_meta( $post->ID, '_neuf_events_price', true);
 		$time = get_post_meta( $post->ID, '_neuf_events_starttime', true);
 		?>
@@ -111,9 +109,6 @@ function neuf_events_program() {
 				</td>
 				<td class="title">
 					<a href="<?php the_permalink();?>"><?php the_title();?></a>
-				</td>
-				<td class="type">
-					<?php echo $type; ?>
 				</td>
 				<td class="place">
 					<?php echo $venue;?>

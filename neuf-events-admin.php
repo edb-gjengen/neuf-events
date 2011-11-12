@@ -3,14 +3,14 @@
 /* Add custom columns. */
 function change_columns( $cols ) {
 	$custom_cols = array(
-		'cb' => '<input type="checkbox" />',
-		'title' => __( 'Tittel', 'trans' ),
-		'author' => __( 'Forfatter', 'trans' ),
-		'date' => __( 'Publiseringsdato', 'trans' ),
-		'type' => __( 'Type', 'trans' ),
-		'venue' => __( 'Sted', 'trans' ),
+		'cb'        => '<input type="checkbox" />',
+		'title'     => __( 'Tittel', 'trans' ),
+		'author'    => __( 'Forfatter', 'trans' ),
+		'date'      => __( 'Publiseringsdato', 'trans' ),
+		'type'      => __( 'Type', 'trans' ),
 		'starttime' => __( 'Dato og klokkeslett', 'trans' ),
-		'endtime' => __( 'Sluttdato og -klokkeslett', 'trans' ),
+		'endtime'   => __( 'Sluttdato og -klokkeslett', 'trans' ),
+		'venue'     => __( 'Sted', 'trans' )
 	);
 	return $custom_cols;
 }
@@ -28,22 +28,22 @@ function custom_columns( $column, $post_id ) {
 		echo $endtime ? format_datetime($endtime) : __("Ikke satt");
 		break;
 	case "type":
-		echo get_post_meta( $post_id, '_neuf_events_type', true);
+		echo the_terms( $post_id , 'event_type', '', ', ', '' );
 		break;
 	case "venue":
-		echo get_post_meta( $post_id, '_neuf_events_venue', true);
+		echo get_post_meta( $post_id , '_neuf_events_venue', true);
 		break;
 	}
 }
-add_action( "manage_posts_custom_column", "custom_columns", 10, 2 );
+add_action( "manage_posts_custom_column" , "custom_columns", 10, 2 );
 
 // Make these columns sortable
 function sortable_columns( $cols ) {
 	$custom_cols = array(
 		'starttime' => 'starttime',
-		'endtime' => 'endtime',
-		'type' => 'type',
-		'venue' => 'venue',
+		'endtime'   => 'endtime',
+		'type'      => 'type',
+		'venue'     => 'venue',
 	);
 	return array_merge($cols, $custom_cols);
 }
@@ -115,37 +115,9 @@ function neuf_date_custom_box() {
 		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="" /><br />';
 	}
 	echo '</div>';
-	echo '<div class="misc-pub-section">';
-	neuf_event_type();
-	echo '</div>';
 	echo '<div class="misc-pub-section misc-pub-section-last">';
 	neuf_event_venue();
 	echo '</div>';
-}
-
-/* Event type metabox */
-function neuf_event_type(){
-	global $post;
-
-	$neuf_event_type = get_post_meta($post->ID, '_neuf_events_type', true);
-
-	echo "Type:";
-	echo '<select name="_neuf_events_type">';
-	echo $neuf_event_type;
-
-	$types = array(
-		'Annet' ,'Debatt','Fest','Film','Foredag',
-		'Forfatteraften','Klubb','Konsert','Quiz',
-		'Teater','Upop','Stand-up'
-	);
-
-	foreach($types as $type){
-		echo '<option value="' . $type . '"';
-		if($type == $neuf_event_type)
-			echo ' selected="selected"';
-		echo '>' . $type . '</option>';
-	}
-	echo '</select>';
 }
 
 /* Venue metabox */
@@ -180,7 +152,7 @@ function neuf_event_div_custom_box(){
 	$event_fb = get_post_meta($post->ID, '_neuf_events_fb_url', true);
 
 	echo '<div class="misc-pub-section">';
-	echo 'Pris: <input name="_neuf_events_price" type="text"y value="'.$event_price.'" /><br />';
+	echo 'Pris: <input name="_neuf_events_price" type="text" value="'.$event_price.'" /><br />';
 	echo 'Billettservice adresse: <input type="text" name="_neuf_events_bs_url" value="'.$event_bs.'" /><br />';
 	echo '</div>';
 	echo '<div class="misc-pub-section misc-pub-section-last">';
