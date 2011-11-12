@@ -151,13 +151,16 @@ function neuf_event_div_custom_box(){
 	$event_bs = get_post_meta($post->ID, '_neuf_events_bs_url') ? get_post_meta($post->ID, '_neuf_events_bs_url', true) : "";
 	$event_fb = get_post_meta($post->ID, '_neuf_events_fb_url', true);
 
-	echo '<div class="misc-pub-section">';
-	echo 'Pris: <input name="_neuf_events_price" type="text" value="'.$event_price.'" /><br />';
-	echo 'Billettservice adresse: <input type="text" name="_neuf_events_bs_url" value="'.$event_bs.'" /><br />';
-	echo '</div>';
-	echo '<div class="misc-pub-section misc-pub-section-last">';
-	echo 'Facebook addresse: <input type="text" name="_neuf_events_fb_url" value="'.$event_fb.'" />';
-	echo '</div>';
+	?>
+	<div class="misc-pub-section misc-pub-section-last">
+		<label for="_neuf_events_price">Pris:</label><br />
+		<input name="_neuf_events_price" type="text" value="<?php echo $event_price; ?>"></input><br />
+		<label for="_neuf_events_bs_url">Billettservice adresse:</label>
+		<input type="text" name="_neuf_events_bs_url" value="<?php echo $event_bs; ?>" /><br />
+		<label for="_neuf_events_fb_url">Facebook addresse:</label>
+		<input type="text" name="_neuf_events_fb_url" value="<?php echo $event_fb; ?>" />
+	</div>
+	<?php
 }
 
 /* Format a unix timestamp respecting the options set in Settings->General. */
