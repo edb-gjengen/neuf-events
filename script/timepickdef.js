@@ -4,9 +4,9 @@ $j(function(){
 	// Datepicker
 	$j('.datepicker').datetimepicker({
 		currentText: 'Nå',
-		closeText: 'ferdig',
+		closeText: 'Ok',
 		hourText: 'Time',
-		dateFormat: 'dd.mm.yy',
+		dateFormat: 'yy-mm-dd',
 		timeFormat: 'hh:mm',
 		minuteText: 'Minutt',
 		timeText: 'Tid',

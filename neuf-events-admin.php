@@ -72,9 +72,9 @@ function add_events_metaboxes() {
 	wp_enqueue_script('validation_rules');
 
 	add_meta_box(
-		'neuf_events_timestamps',
+		'neuf_events_details',
 		__('Arrangementsdetaljer'),
-		'neuf_date_custom_box',
+		'neuf_date_details',
 		'event',
 		'side',
 		'high'
@@ -83,7 +83,7 @@ function add_events_metaboxes() {
 	add_meta_box(
 		'neuf_event_div',
 		__('Ymse arrangementsdetaljer'),
-		'neuf_event_div_custom_box',
+		'neuf_event_div',
 		'event'
 	);
 }
@@ -93,31 +93,22 @@ function add_events_metaboxes() {
  * 
  * Note: Jquery datetimepickers is loaded in scripts/timepickdef.js
  */
-function neuf_date_custom_box() {
+function neuf_date_details() {
 	global $post;
 	echo '<div class="misc-pub-section">';
 
 	$start = get_post_meta($post->ID, '_neuf_events_starttime', true);
 	$end  = get_post_meta($post->ID, '_neuf_events_endtime', true);
 
-	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' );
+	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' ); ?>
 
-	if( $start ) {
-		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="'.format_datetime($start).'" /><br />';
-
-	} else {
-		echo '<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime" value="" /><br />';
-	}
-
-	if( $end ) {
-		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="'.format_datetime($end).'" /><br />';
-	} else {
-		echo '<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="" /><br />';
-	}
-	echo '</div>';
-	echo '<div class="misc-pub-section misc-pub-section-last">';
-	neuf_event_venue();
-	echo '</div>';
+	<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="<?php echo $start ? date("Y-m-d h:i", $start) : "" ?>" /><br />
+		<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="<?php echo $end ? date("Y-m-d h:i", $end) : "" ?>" /><br />
+	</div>';
+	<div class="misc-pub-section misc-pub-section-last">
+		<?php neuf_event_venue(); ?>
+	</div>
+<?php
 }
 
 /* Venue metabox */
@@ -144,20 +135,23 @@ function neuf_event_venue(){
 }
 
 /* Metabox with additional info. */
-function neuf_event_div_custom_box(){
+function neuf_event_div(){
 	global $post;
 
 	$event_price = get_post_meta($post->ID, '_neuf_events_price') ? get_post_meta($post->ID, '_neuf_events_price', true) : "";
 	$event_bs = get_post_meta($post->ID, '_neuf_events_bs_url') ? get_post_meta($post->ID, '_neuf_events_bs_url', true) : "";
 	$event_fb = get_post_meta($post->ID, '_neuf_events_fb_url', true);
 
-	echo '<div class="misc-pub-section">';
-	echo 'Pris: <input name="_neuf_events_price" type="text" value="'.$event_price.'" /><br />';
-	echo 'Billettservice adresse: <input type="text" name="_neuf_events_bs_url" value="'.$event_bs.'" /><br />';
-	echo '</div>';
-	echo '<div class="misc-pub-section misc-pub-section-last">';
-	echo 'Facebook addresse: <input type="text" name="_neuf_events_fb_url" value="'.$event_fb.'" />';
-	echo '</div>';
+	?>
+	<div class="misc-pub-section misc-pub-section-last">
+		<label for="_neuf_events_price">Pris:</label><br />
+		<input name="_neuf_events_price" type="text" value="<?php echo $event_price; ?>"></input><br />
+		<label for="_neuf_events_bs_url">Billettservice adresse:</label>
+		<input type="text" name="_neuf_events_bs_url" value="<?php echo $event_bs; ?>" /><br />
+		<label for="_neuf_events_fb_url">Facebook addresse:</label>
+		<input type="text" name="_neuf_events_fb_url" value="<?php echo $event_fb; ?>" />
+	</div>
+	<?php
 }
 
 /* Format a unix timestamp respecting the options set in Settings->General. */

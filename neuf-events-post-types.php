@@ -50,7 +50,7 @@ function neuf_events_post_type() {
 function neuf_events_save_info( $post_id ) {
 	// verify this came from the our screen and with proper authorization,
 	// because save_post can be triggered at other times
-	if ( !wp_verify_nonce( $_POST['neuf_events_nonce'], 'neuf_events_nonce' )) {
+	if ( !array_key_exists('neuf_events_nonce', $_POST) || !wp_verify_nonce( $_POST['neuf_events_nonce'], 'neuf_events_nonce' )) {
 		return $post_id;
 	}
 
