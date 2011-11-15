@@ -38,6 +38,7 @@ function neuf_events_post_type() {
 				'comments',
 				'revisions',
 				'administrator',
+				'custom-fields'
 			),
 			'register_meta_box_cb' => 'add_events_metaboxes',
 		)
