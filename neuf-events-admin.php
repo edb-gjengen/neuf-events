@@ -5,11 +5,11 @@ function change_columns( $cols ) {
 	$custom_cols = array(
 		'cb'        => '<input type="checkbox" />',
 		'title'     => __( 'Title', 'neuf_event' ),
-		'starttime' => __( 'Date & Time', 'event_type' ),
-		'endtime'   => __( 'Ending Date & Time', 'event_type'), //Sluttdato og -klokkeslett
-		'venue'     => __( 'Venue', 'event_type' ),
-		'type'      => __( 'Type', 'event_type' ),
-		'date'      => __( 'Date Published', 'event_type' ),
+		'starttime' => __( 'Date & Time', 'neuf_event' ),
+		'endtime'   => __( 'Ending Date & Time', 'neuf_event'),
+		'venue'     => __( 'Venue', 'neuf_event' ),
+		'type'      => __( 'Type', 'neuf_event' ),
+		'date'      => __( 'Date Published', 'neuf_event' ),
 		'author'    => __( 'Author', 'neuf_event' ),
 	);
 	return $custom_cols;
@@ -25,7 +25,7 @@ function custom_columns( $column, $post_id ) {
 		break;
 	case "endtime":
 		$endtime = intval(get_post_meta( $post_id, '_neuf_events_endtime', true));
-		echo $endtime ? format_datetime($endtime) : __("Ikke satt");
+		echo $endtime ? format_datetime($endtime) : __("None", 'neuf_event');
 		break;
 	case "type":
 		echo the_terms( $post_id , 'event_type', '', ', ', '' );

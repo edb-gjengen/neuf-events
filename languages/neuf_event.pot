@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-20 21:46+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: neuf-events-admin.php:7
+msgid "Title"
+msgstr ""
+
+#: neuf-events-admin.php:8
+msgid "Date & Time"
+msgstr ""
+
+#: neuf-events-admin.php:9
+msgid "Ending Date & Time"
+msgstr ""
+
+#: neuf-events-admin.php:10
+msgid "Venue"
+msgstr ""
+
+#: neuf-events-admin.php:11
+msgid "Type"
+msgstr ""
+
+#: neuf-events-admin.php:12
+msgid "Date Published"
+msgstr ""
+
+#: neuf-events-admin.php:13
+msgid "Author"
+msgstr ""
+
+#: neuf-events-admin.php:28
+msgid "Ikke satt"
+msgstr ""
+
+#: neuf-events-admin.php:80
+msgid "Event Details"
+msgstr ""
+
+#: neuf-events-admin.php:113
+msgid "Starts"
+msgstr ""
+
+#: neuf-events-admin.php:114
+msgid "Ends"
+msgstr ""
+
+#: neuf-events-admin.php:127
+msgid "Venue:"
+msgstr ""
+
+#: neuf-events-admin.php:137
+msgid "<option value=\"Annet\">Other</option>"
+msgstr ""
+
+#: neuf-events-admin.php:150
+msgid "Price"
+msgstr ""
+
+#: neuf-events-admin.php:152
+msgid "Billettservice address"
+msgstr ""
+
+#: neuf-events-admin.php:154
+msgid "Facebook address"
+msgstr ""
+
+#: neuf-events-post-types.php:11
+msgid "Events"
+msgstr ""
+
+#: neuf-events-post-types.php:12
+msgid "Event"
+msgstr ""
+
+#: neuf-events-post-types.php:13 neuf-events-post-types.php:14
+msgid "Add New"
+msgstr ""
+
+#: neuf-events-post-types.php:15
+msgid "Edit Event"
+msgstr ""
+
+#: neuf-events-post-types.php:16
+msgid "Add New Event"
+msgstr ""
+
+#: neuf-events-post-types.php:17
+msgid "View Event"
+msgstr ""
+
+#: neuf-events-post-types.php:18
+msgid "Search Events"
+msgstr ""
+
+#: neuf-events-post-types.php:19
+msgid "No events found"
+msgstr ""
+
+#: neuf-events-post-types.php:20
+msgid "No events found in trash"
+msgstr ""
+
+#: neuf-events-taxonomies.php:9 neuf-events-taxonomies.php:10
+msgid "Event Type"
+msgstr ""
+
+#: neuf-events-taxonomies.php:11
+msgid "Search Event Types"
+msgstr ""
+
+#: neuf-events-taxonomies.php:12
+msgid "All Event Types"
+msgstr ""
+
+#: neuf-events-taxonomies.php:13
+msgid "Subtype of"
+msgstr ""
+
+#: neuf-events-taxonomies.php:14
+msgid "Subtype of:"
+msgstr ""
+
+#: neuf-events-taxonomies.php:15
+msgid "Edit Event Type"
+msgstr ""
+
+#: neuf-events-taxonomies.php:16
+msgid "Update Event Type"
+msgstr ""
+
+#: neuf-events-taxonomies.php:17
+msgid "Add New Event Type"
+msgstr ""
+
+#: neuf-events-taxonomies.php:18
+msgid "Name"
+msgstr ""
+
+#: neuf-events-taxonomies.php:19
+msgid "Event Types"
+msgstr ""
