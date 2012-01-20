@@ -6,17 +6,17 @@
  */
 function neuf_register_event_taxonomies() {
 	$labels = array(
-		'name'              => 'Arrangementstype',
-		'singular_name'     => 'Arrangementstype',
-		'search_items'      => 'S&oslash;k etter arrangementstype',
-		'all_items'	    => 'Alle arrangementstyper',
-		'parent_item'       => 'Undertype av',
-		'parent_item_colon' => 'Undertype av:',
-		'edit_item'         => 'Rediger arrangementstype',
-		'update_item'       => 'Oppdater arrangementstype',
-		'add_new_item'      => 'Legg til ny arrangementstype',
-		'new_item_name'     => 'Navn p&aring; ny arrangementstype',
-		'menu_name'         => 'Arrangementstyper'
+		'name'              => __('Event Type', 'neuf_event'), //Arrangementstype
+		'singular_name'     => __('Event Type', 'neuf_event'),
+		'search_items'      => __('Search Event Types', 'neuf_event'),//'S&oslash;k etter arrangementstype',
+		'all_items'	    => __('All Event Types', 'neuf_event'),
+		'parent_item'       => __('Subtype of', 'neuf_event'),//'Undertype av',
+		'parent_item_colon' => __('Subtype of:', 'neuf_event'),//'Undertype av:',
+		'edit_item'         => __('Edit Event Type', 'neuf_event'),
+		'update_item'       => __('Update Event Type', 'neuf_event'),
+		'add_new_item'      => __('Add New Event Type', 'neuf_event'),
+		'new_item_name'     => __('Name', 'neuf_event'),//'Navn p&aring; ny arrangementstype',
+		'menu_name'         => __('Event Types', 'neuf_event'),
 	);
 
 	register_taxonomy( 'event_type', array(
@@ -28,7 +28,7 @@ function neuf_register_event_taxonomies() {
 		'show_ui'      => true,
 		'query_var'    => true,
 		'rewrite'      => array(
-			'slug'         => 'arrangementstyper',
+			'slug'         => 'eventtypes',
 			'hierarchical' => true
 		)
 	) );

@@ -8,16 +8,16 @@
 /* Create the fields the post type should have */
 function neuf_events_post_type() {
 	$labels = array(
-		'name'                  =>      __( 'Events'                        ),
-		'singular_name'         =>      __( 'Event'                         ),
-		'add_new'               =>      __( 'Add New Event'                 ),
-		'add_new_item'          =>      __( 'Add New Event'                 ),
-		'edit_item'             =>      __( 'Edit Event'                    ),
-		'new_item'              =>      __( 'Add New Event'                 ),
-		'view_item'             =>      __( 'View Event'                    ),
-		'search_items'          =>      __( 'Search Event'                  ),
-		'not_found'             =>      __( 'No events found'               ),
-		'not_found_in_trash'    =>      __( 'No events found in trash'      )
+		'name'                  =>      __( 'Events', 'neuf_event'),
+		'singular_name'         =>      __( 'Event', 'neuf_event'),
+		'add_new'               =>      __( 'Add New', 'neuf_event'),
+		'add_new_item'          =>      __( 'Add New', 'neuf_event'),
+		'edit_item'             =>      __( 'Edit Event', 'neuf_event'),
+		'new_item'              =>      __( 'Add New Event', 'neuf_event'),
+		'view_item'             =>      __( 'View Event', 'neuf_event'),
+		'search_items'          =>      __( 'Search Events', 'neuf_event'),
+		'not_found'             =>      __( 'No events found', 'neuf_event'),
+		'not_found_in_trash'    =>      __( 'No events found in trash', 'neuf_event')
 	);
 	register_post_type(
 		'event',

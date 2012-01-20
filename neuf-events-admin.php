@@ -4,13 +4,13 @@
 function change_columns( $cols ) {
 	$custom_cols = array(
 		'cb'        => '<input type="checkbox" />',
-		'title'     => __( 'Tittel', 'trans' ),
-		'author'    => __( 'Forfatter', 'trans' ),
-		'date'      => __( 'Publiseringsdato', 'trans' ),
-		'type'      => __( 'Type', 'trans' ),
-		'starttime' => __( 'Dato og klokkeslett', 'trans' ),
-		'endtime'   => __( 'Sluttdato og -klokkeslett', 'trans' ),
-		'venue'     => __( 'Sted', 'trans' )
+		'title'     => __( 'Title', 'neuf_event' ),
+		'starttime' => __( 'Date & Time', 'event_type' ),
+		'endtime'   => __( 'Ending Date & Time', 'event_type'), //Sluttdato og -klokkeslett
+		'venue'     => __( 'Venue', 'event_type' ),
+		'type'      => __( 'Type', 'event_type' ),
+		'date'      => __( 'Date Published', 'event_type' ),
+		'author'    => __( 'Author', 'neuf_event' ),
 	);
 	return $custom_cols;
 }
@@ -49,8 +49,7 @@ function sortable_columns( $cols ) {
 }
 add_filter( "manage_edit-event_sortable_columns", "sortable_columns" );
 
-/* Add metaboxes (with styles) */
-function add_events_metaboxes() {
+function add_admin_script_and_styles() {
 	// Date-selection for events
 	wp_register_style('timecss', plugins_url("/neuf-events/style/jquery-ui-1.8.12.custom.css", dirname(__FILE__)));
 
@@ -70,48 +69,53 @@ function add_events_metaboxes() {
 	wp_enqueue_script('timedefs');
 	wp_enqueue_script('formvalidation');
 	wp_enqueue_script('validation_rules');
+}
+
+/* Add metaboxes (with styles) */
+function add_events_metaboxes() {
+	add_admin_script_and_styles();
 
 	add_meta_box(
 		'neuf_events_details',
-		__('Arrangementsdetaljer'),
-		'neuf_date_details',
+		__('Event Details', 'neuf_event'),
+		'neuf_event_details',
 		'event',
 		'side',
 		'high'
 	);
-
-	add_meta_box(
-		'neuf_event_div',
-		__('Ymse arrangementsdetaljer'),
-		'neuf_event_div',
-		'event'
-	);
 }
 
+function neuf_event_details() {
+?>
+	<div class="misc-pub-section">
+		<?php neuf_date_details(); ?>
+	</div>
+	<div class="misc-pub-section ">
+		<?php neuf_event_venue(); ?>
+	</div>
+	<div class="misc-pub-section misc-pub-section-last">
+		<?php neuf_event_div(); ?>
+	</div>
+<?php
+}
 /*
- * Time metabox.
- * 
+ * Date & Time
  * Note: Jquery datetimepickers is loaded in scripts/timepickdef.js
  */
 function neuf_date_details() {
 	global $post;
-	echo '<div class="misc-pub-section">';
 
 	$start = get_post_meta($post->ID, '_neuf_events_starttime', true);
 	$end  = get_post_meta($post->ID, '_neuf_events_endtime', true);
 
-	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' ); ?>
-
-	<label for="_neuf_events_starttime">Start:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="<?php echo $start ? date("Y-m-d h:i", $start) : "" ?>" /><br />
-		<label for="_neuf_events_endtime">Slutt:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="<?php echo $end ? date("Y-m-d h:i", $end) : "" ?>" /><br />
-	</div>';
-	<div class="misc-pub-section misc-pub-section-last">
-		<?php neuf_event_venue(); ?>
-	</div>
+	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' );
+?>
+		<label for="_neuf_events_starttime"><?php _e('Starts', 'neuf_event'); ?>:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="<?php echo $start ? date("Y-m-d h:i", $start) : "" ?>" /><br />
+		<label for="_neuf_events_endtime"><?php _e('Ends', 'neuf_event'); ?>:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="<?php echo $end ? date("Y-m-d h:i", $end) : "" ?>" /><br />
 <?php
 }
 
-/* Venue metabox */
+/* Venue */
 function neuf_event_venue(){
 	global $post;
 
@@ -120,7 +124,7 @@ function neuf_event_venue(){
 		'Klubbscenen', 'Lillesalen', 'Teaterscenen', 'Storsalen',
 	);
 	$neuf_event_venue = get_post_meta($post->ID, '_neuf_events_venue', true);
-	echo 'Sted: ';
+	_e('Venue:', 'neuf_event');
 	echo '<select name="_neuf_events_venue">';
 
 	foreach ($venues as $venue) {
@@ -130,12 +134,12 @@ function neuf_event_venue(){
 		}
 		echo '>'.$venue.'</option>';
 	}
-	echo '<option vlaue="Annet">Annet</option>';
+	_e('<option value="Annet">Other</option>', 'neuf_event');
 	echo '</select><br />';
 }
 
-/* Metabox with additional info. */
-function neuf_event_div(){
+/* Price and additional info. */
+function neuf_event_div() {
 	global $post;
 
 	$event_price = get_post_meta($post->ID, '_neuf_events_price') ? get_post_meta($post->ID, '_neuf_events_price', true) : "";
@@ -143,19 +147,17 @@ function neuf_event_div(){
 	$event_fb = get_post_meta($post->ID, '_neuf_events_fb_url', true);
 
 	?>
-	<div class="misc-pub-section misc-pub-section-last">
-		<label for="_neuf_events_price">Pris:</label><br />
+        <label for="_neuf_events_price"><?php _e("Price", 'neuf_event'); ?></label>
 		<input name="_neuf_events_price" type="text" value="<?php echo $event_price; ?>"></input><br />
-		<label for="_neuf_events_bs_url">Billettservice adresse:</label>
+		<label for="_neuf_events_bs_url"><?php _e("Billettservice address", 'neuf_event'); ?>:</label>
 		<input type="text" name="_neuf_events_bs_url" value="<?php echo $event_bs; ?>" /><br />
-		<label for="_neuf_events_fb_url">Facebook addresse:</label>
+		<label for="_neuf_events_fb_url"><?php _e("Facebook address", 'neuf_event'); ?>:</label>
 		<input type="text" name="_neuf_events_fb_url" value="<?php echo $event_fb; ?>" />
-	</div>
 	<?php
 }
 
 /* Format a unix timestamp respecting the options set in Settings->General. */
-if(!function_exists('format_datetime')) {
+if( !function_exists('format_datetime') ) {
 	function format_datetime($timestamp) {
 		return date_i18n(get_option('date_format')." ".get_option('time_format'), intval($timestamp));
 	}

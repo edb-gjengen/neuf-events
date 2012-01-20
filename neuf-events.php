@@ -16,6 +16,8 @@ require_once( 'neuf-events-post-types.php' );
 require_once( 'neuf-events-admin.php' );
 require_once( 'neuf-events-taxonomies.php' );
 
+/* Register the translations */
+add_action( 'init' , 'neuf_events_i18n' , 0 );
 /* Register the event post type */
 add_action( 'init' , 'neuf_events_post_type' , 0 );
 add_action( 'save_post' , 'neuf_events_save_info' );
@@ -26,5 +28,9 @@ add_action( 'init' , 'neuf_register_event_taxonomies', 1 );
 
 /* Register shortcode for program. */
 add_shortcode( 'neuf-events-program' , 'neuf_events_program' );
+
+function neuf_events_i18n() {
+	load_plugin_textdomain( 'neuf_event', false, dirname( plugin_basename( __FILE__ ) ) .'/languages' );
+}
 
 ?>
