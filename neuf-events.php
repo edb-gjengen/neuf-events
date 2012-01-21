@@ -32,5 +32,17 @@ add_shortcode( 'neuf-events-program' , 'neuf_events_program' );
 function neuf_events_i18n() {
 	load_plugin_textdomain( 'neuf_event', false, dirname( plugin_basename( __FILE__ ) ) .'/languages' );
 }
+/* JSON API controller */
+function add_events_controller($controllers) {
+  $controllers[] = 'events';
+  return $controllers;
+}
+add_filter('json_api_controllers', 'add_events_controller');
+
+function set_events_controller_path() {
+  return WP_PLUGIN_DIR."/".dirname( plugin_basename( __FILE__ ))."/neuf-events-json-controller.php";
+}
+add_filter('json_api_events_controller_path', 'set_events_controller_path');
+
 
 ?>
