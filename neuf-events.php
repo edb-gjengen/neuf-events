@@ -3,7 +3,7 @@
   Plugin Name: neuf-events
   Plugin URI: http://www.studentersamfundet.no
   Description: Events custom post type
-  Version 0.2.1
+  Version: 0.3
   Author: EDB-web
   Author URI: http://www.studentersamfundet.no
   License: GPL v2 or later
