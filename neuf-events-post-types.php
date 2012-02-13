@@ -68,6 +68,7 @@ function neuf_events_save_info( $post_id ) {
 	$tosave['_neuf_events_bs_url'] = $_POST['_neuf_events_bs_url'];
 	$tosave['_neuf_events_fb_url'] = $_POST['_neuf_events_fb_url'];
 	$tosave['_neuf_events_venue'] = $_POST['_neuf_events_venue'];
+	$tosave['_neuf_events_promo_period'] = $_POST['_neuf_events_promo_period'];
 
 	// Update or add post meta
 	foreach($tosave as $key=>$value)

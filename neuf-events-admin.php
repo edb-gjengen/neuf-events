@@ -9,6 +9,7 @@ function change_columns( $cols ) {
 		'endtime'   => __( 'Ending Date & Time', 'neuf_event'),
 		'venue'     => __( 'Venue', 'neuf_event' ),
 		'type'      => __( 'Type', 'neuf_event' ),
+		'promoperiod' => __( 'Promo Period', 'neuf_event' ),
 		'date'      => __( 'Date Published', 'neuf_event' ),
 		'author'    => __( 'Author', 'neuf_event' ),
 	);
@@ -33,6 +34,9 @@ function custom_columns( $column, $post_id ) {
 	case "venue":
 		echo get_post_meta( $post_id , '_neuf_events_venue', true);
 		break;
+	case "promoperiod":
+		echo get_post_meta( $post_id, '_neuf_events_promo_period', true);
+		break;
 	}
 }
 add_action( "manage_posts_custom_column" , "custom_columns", 10, 2 );
@@ -44,6 +48,7 @@ function sortable_columns( $cols ) {
 		'endtime'   => 'endtime',
 		'type'      => 'type',
 		'venue'     => 'venue',
+		'promoperiod'     => 'promoperiod',
 	);
 	return array_merge($cols, $custom_cols);
 }
@@ -93,8 +98,11 @@ function neuf_event_details() {
 	<div class="misc-pub-section ">
 		<?php neuf_event_venue(); ?>
 	</div>
-	<div class="misc-pub-section misc-pub-section-last">
+	<div class="misc-pub-section ">
 		<?php neuf_event_div(); ?>
+	</div>
+	<div class="misc-pub-section misc-pub-section-last">
+                <?php neuf_event_promoperiod(); ?>
 	</div>
 <?php
 }
@@ -135,6 +143,26 @@ function neuf_event_venue(){
 		echo '>'.$venue.'</option>';
 	}
 	_e('<option value="Annet">Other</option>', 'neuf_event');
+	echo '</select><br />';
+}
+/* Promo period */
+function neuf_event_promoperiod(){
+	global $post;
+
+	$promoperiod = array(
+            __('Default', 'neuf_event'), __('Month', 'neuf_event'), __('Semester', 'neuf_event'),
+	);
+	$neuf_event_promoperiod = get_post_meta($post->ID, '_neuf_events_promo_period', true);
+	_e('Promo Period', 'neuf_event');
+	echo '<select name="_neuf_events_promo_period">';
+
+	foreach ($promoperiod as $period) {
+		echo '<option value="'.$period.'"';
+		if($period == $neuf_event_promoperiod) {
+			echo ' selected="selected"';
+		}
+		echo '>'.$period.'</option>';
+	}
 	echo '</select><br />';
 }
 
