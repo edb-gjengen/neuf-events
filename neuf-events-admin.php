@@ -150,7 +150,7 @@ function neuf_event_promoperiod(){
 	global $post;
 
 	$promoperiod = array(
-            __('Default', 'neuf_event'), __('Month', 'neuf_event'), __('Semester', 'neuf_event'),
+            __('Default', 'neuf_event'), __('Week', 'neuf_event'), __('Month', 'neuf_event'), __('Semester', 'neuf_event'),
 	);
 	$neuf_event_promoperiod = get_post_meta($post->ID, '_neuf_events_promo_period', true);
 	_e('Promo Period', 'neuf_event');
