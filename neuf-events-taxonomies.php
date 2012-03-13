@@ -33,4 +33,28 @@ function neuf_register_event_taxonomies() {
 		)
 	) );
 }
+
+/**
+ * Extend post_class() to include event type classes.
+ *
+ * post_class() is called to output semantic classes to post elements. In this function, we add a class for each event type associated with the post.
+ *
+ * In the neuf-old-style theme, consider using neuf_post_class() instead. (Defined in the theme's functions.php.)
+ *
+ * This function was originally written to be able to display different icons on different types of events.
+ */
+function neuf_post_class_event_type( $classes ) {
+	global $post;
+
+	if ( is_object_in_taxonomy( $post->post_type, 'event_type' ) ) {
+		foreach ( (array) get_the_terms ( $post->ID , 'event_type' ) as $event_type ) {
+			if ( empty( $event_type->slug ) )
+				continue;
+			$classes[] = 'event-type-' . sanitize_html_class( $event_type->slug, $event_type->term_id);
+		}
+	}
+
+	return $classes;
+}
+add_filter('post_class', 'neuf_post_class_event_type' );
 ?>
