@@ -64,7 +64,8 @@ function neuf_events_save_info( $post_id ) {
 	// Date strings are converted to unix time
 	$tosave['_neuf_events_starttime'] = strtotime( $_POST['_neuf_events_starttime'] );
 	$tosave['_neuf_events_endtime'] = strtotime( $_POST['_neuf_events_endtime'] );
-	$tosave['_neuf_events_price'] = $_POST['_neuf_events_price'];
+	$tosave['_neuf_events_price_regular'] = $_POST['_neuf_events_price_regular'];
+	$tosave['_neuf_events_price_member'] = $_POST['_neuf_events_price_member'];
 	$tosave['_neuf_events_bs_url'] = $_POST['_neuf_events_bs_url'];
 	$tosave['_neuf_events_fb_url'] = $_POST['_neuf_events_fb_url'];
 	$tosave['_neuf_events_venue'] = $_POST['_neuf_events_venue'];
@@ -99,7 +100,8 @@ function neuf_events_program() {
 
 	while ( $events->have_posts() ) : $events->the_post();
 		$venue = get_post_meta( $post->ID, '_neuf_events_venue', true);
-		$price = get_post_meta( $post->ID, '_neuf_events_price', true);
+		$price_regular = get_post_meta( $post->ID, '_neuf_events_price_regular', true);
+		$price_member = get_post_meta( $post->ID, '_neuf_events_price_member', true);
 		$time = get_post_meta( $post->ID, '_neuf_events_starttime', true);
 		?>
 			<tr>

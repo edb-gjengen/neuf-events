@@ -170,13 +170,16 @@ function neuf_event_promoperiod(){
 function neuf_event_div() {
 	global $post;
 
-	$event_price = get_post_meta($post->ID, '_neuf_events_price') ? get_post_meta($post->ID, '_neuf_events_price', true) : "";
+	$event_price_regular = get_post_meta($post->ID, '_neuf_events_price_regular') ? get_post_meta($post->ID, '_neuf_events_price_regular', true) : "";
+	$event_price_member  = get_post_meta($post->ID, '_neuf_events_price_member') ? get_post_meta($post->ID, '_neuf_events_price_member', true) : "";
 	$event_bs = get_post_meta($post->ID, '_neuf_events_bs_url') ? get_post_meta($post->ID, '_neuf_events_bs_url', true) : "";
 	$event_fb = get_post_meta($post->ID, '_neuf_events_fb_url', true);
 
 	?>
-        <label for="_neuf_events_price"><?php _e("Price", 'neuf_event'); ?></label>
-		<input name="_neuf_events_price" type="text" value="<?php echo $event_price; ?>"></input><br />
+        <label for="_neuf_events_price_regular"><?php _e("Price Regular", 'neuf_event'); ?></label>
+		<input name="_neuf_events_price_regular" type="text" value="<?php echo $event_price_regular; ?>"></input><br />
+        <label for="_neuf_events_price_member"><?php _e("Price Member", 'neuf_event'); ?></label>
+		<input name="_neuf_events_price_member" type="text" value="<?php echo $event_price_member; ?>"></input><br />
 		<label for="_neuf_events_bs_url"><?php _e("Billettservice address", 'neuf_event'); ?>:</label>
 		<input type="text" name="_neuf_events_bs_url" value="<?php echo $event_bs; ?>" /><br />
 		<label for="_neuf_events_fb_url"><?php _e("Facebook address", 'neuf_event'); ?>:</label>
