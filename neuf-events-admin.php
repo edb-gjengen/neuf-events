@@ -102,7 +102,12 @@ function neuf_event_details() {
 		<?php neuf_event_div(); ?>
 	</div>
 	<div class="misc-pub-section misc-pub-section-last">
-                <?php neuf_event_promoperiod(); ?>
+        <?php
+            /* Only editor or superior can set the promo period */
+            if ( current_user_can('editor') ) {
+                neuf_event_promoperiod();
+            }
+        ?>
 	</div>
 <?php
 }
