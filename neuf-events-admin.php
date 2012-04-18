@@ -123,8 +123,8 @@ function neuf_date_details() {
 
 	wp_nonce_field( 'neuf_events_nonce','neuf_events_nonce' );
 ?>
-		<label for="_neuf_events_starttime"><?php _e('Starts', 'neuf_event'); ?>:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="<?php echo $start ? date("Y-m-d h:i", $start) : "" ?>" /><br />
-		<label for="_neuf_events_endtime"><?php _e('Ends', 'neuf_event'); ?>:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="<?php echo $end ? date("Y-m-d h:i", $end) : "" ?>" /><br />
+		<label for="_neuf_events_starttime"><?php _e('Starts', 'neuf_event'); ?>:</label><input type="text" class="datepicker required" name="_neuf_events_starttime"  value="<?php echo $start ? date("Y-m-d H:i", $start) : "" ?>" /><br />
+		<label for="_neuf_events_endtime"><?php _e('Ends', 'neuf_event'); ?>:</label><input name="_neuf_events_endtime" type="text" class="datepicker" value="<?php echo $end ? date("Y-m-d H:i", $end) : "" ?>" /><br />
 <?php
 }
 
