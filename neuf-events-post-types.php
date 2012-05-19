@@ -47,7 +47,7 @@ function neuf_events_post_type() {
 
 
 /* When the post is saved, save our custom data */ 
-function neuf_events_save_info( $post_id ) {
+function neuf_events_save_post( $post_id, $post ) {
 	// verify this came from the our screen and with proper authorization,
 	// because save_post can be triggered at other times
 	if ( !array_key_exists('neuf_events_nonce', $_POST) || !wp_verify_nonce( $_POST['neuf_events_nonce'], 'neuf_events_nonce' )) {
@@ -80,7 +80,7 @@ function neuf_events_save_info( $post_id ) {
 	return $post_id;
 }
 
-/** View of the custom page */
+/** Sample table view of events */
 function neuf_events_program() {
 	global $post, $wp_locale;
 

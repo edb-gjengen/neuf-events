@@ -4,7 +4,7 @@
  *
  * We use the taxonomy to differ between different event types, such as concerts, movie screenings and parties. The taxonomy can also be applied to regular posts, so that you can assign terms to a news story. This way, we are able to showcase relevant events alongside our news articles.
  */
-function neuf_register_event_taxonomies() {
+function neuf_events_register_taxonomies() {
 	$labels = array(
 		'name'              => __('Event Type', 'neuf_event'), //Arrangementstype
 		'singular_name'     => __('Event Type', 'neuf_event'),
@@ -56,5 +56,27 @@ function neuf_post_class_event_type( $classes ) {
 
 	return $classes;
 }
-add_filter('post_class', 'neuf_post_class_event_type' );
+add_filter( 'post_class', 'neuf_post_class_event_type' );
+
+/* Default terms for custom taxonomies */
+function neuf_events_set_default_object_terms( $post_id, $post ) {
+    /* Make sure it's an event */
+    if ( !isset($_POST['post_type']) || $_POST['post_type'] !== 'event' ) {
+        return;
+    }
+    /* Taxonomy => array of default terms */
+    $defaults = array(
+        'event_type' => array( 'annet' ),
+        );
+    $taxonomies = get_object_taxonomies( $_POST['post_type'] );
+    foreach ( (array) $taxonomies as $taxonomy ) {
+        $terms = wp_get_post_terms( $post_id, $taxonomy );
+        /* No tax terms assoc with post? */
+        if ( empty( $terms ) && array_key_exists( $taxonomy, $defaults ) ) {
+            /* ... then add defaults */
+            wp_set_object_terms( $post_id, $defaults[$taxonomy], $taxonomy );
+        }
+    }
+}
+add_action( 'save_post', 'neuf_events_set_default_object_terms', 100, 2 );
 ?>

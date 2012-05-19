@@ -20,13 +20,13 @@ require_once( 'neuf-events-taxonomies.php' );
 add_action( 'init' , 'neuf_events_i18n' , 0 );
 /* Register the event post type */
 add_action( 'init' , 'neuf_events_post_type' , 0 );
-add_action( 'save_post' , 'neuf_events_save_info' );
+add_action( 'save_post' , 'neuf_events_save_post', 100, 2);
 add_action( 'publish_neuf_events' , 'neuf_events_publish' );
 
 /* Register taxonomies */
-add_action( 'init' , 'neuf_register_event_taxonomies', 1 );
+add_action( 'init' , 'neuf_events_register_taxonomies', 1 );
 
-/* Register shortcode for program. */
+/* Register shortcode for sample table view of program. */
 add_shortcode( 'neuf-events-program' , 'neuf_events_program' );
 
 function neuf_events_i18n() {
