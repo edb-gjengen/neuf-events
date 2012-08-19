@@ -140,14 +140,20 @@ function neuf_event_venue(){
 	_e('Venue:', 'neuf_event');
 	echo '<select name="_neuf_events_venue">';
 
+	$selected = false;
 	foreach ($venues as $venue) {
 		echo '<option value="'.$venue.'"';
 		if($venue == $neuf_event_venue) {
 			echo ' selected="selected"';
+			$selected = true;
 		}
 		echo '>'.$venue.'</option>';
 	}
-	_e('<option value="Annet">Other</option>', 'neuf_event');
+	$other = __('Annetsteds', 'neuf_event');
+	if ( $selected )
+		echo('<option value="' . $other . '">' . $other . '</option>');
+	else
+		echo('<option value="' . $other . '" selected="selected">' . $other . '</option>');
 	echo '</select><br />';
 }
 /* Promo period */
