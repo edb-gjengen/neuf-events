@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: neuf-events\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-18 23:23+0100\n"
-"PO-Revision-Date: 2012-09-18 23:23+0100\n"
+"PO-Revision-Date: 2012-09-18 23:36+0100\n"
 "Last-Translator: Just Thomas Misund <t@studentersamfundet.no>\n"
 "Language-Team: Nikolai Kristiansen <nikolai@studentersamfundet.no>\n"
 "MIME-Version: 1.0\n"
@@ -193,7 +193,7 @@ msgstr "Arrangementstyper"
 
 #: neuf-events-taxonomies.php:33
 msgid "eventtype"
-msgstr "konsept:"
+msgstr "konsept"
 
 #~ msgid "<option value=\"Annet\">Other</option>"
 #~ msgstr "<option value=\"Annet\">Annet</option>"
