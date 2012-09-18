@@ -20,7 +20,7 @@ function neuf_events_post_type() {
 		'not_found_in_trash'    =>      __( 'No events found in trash', 'neuf_event')
 	);
 	register_post_type(
-		__( 'event' , 'neuf_event'),
+		'event',
 		array(
 			'labels'             => $labels,
 			'menu_position'      => 5,
