@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: neuf-events\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 23:06+0100\n"
-"PO-Revision-Date: 2012-09-18 23:08+0100\n"
+"POT-Creation-Date: 2012-09-18 23:23+0100\n"
+"PO-Revision-Date: 2012-09-18 23:23+0100\n"
 "Last-Translator: Just Thomas Misund <t@studentersamfundet.no>\n"
 "Language-Team: Nikolai Kristiansen <nikolai@studentersamfundet.no>\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "Ingen arrangement funnet"
 msgid "No events found in trash"
 msgstr "Ingen arrangement funnet i søpla"
 
-#: neuf-events-post-types.php:23
+#: neuf-events-post-types.php:45
 msgid "event"
 msgstr "arrangement"
 

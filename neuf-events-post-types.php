@@ -41,6 +41,9 @@ function neuf_events_post_type() {
 				'custom-fields'
 			),
 			'register_meta_box_cb' => 'add_events_metaboxes',
+			'rewrite'            => array(
+				'slug' => __( 'event', 'neuf_event' ),
+			),
 		)
 	);
 }
