@@ -149,7 +149,7 @@ function neuf_event_venue(){
 		}
 		echo '>'.$venue.'</option>';
 	}
-	$other = __('Annetsteds', 'neuf_event');
+	$other = __('Elsewhere', 'neuf_event');
 	if ( $selected )
 		echo('<option value="' . $other . '">' . $other . '</option>');
 	else

@@ -7,18 +7,148 @@ msgid ""
 msgstr ""
 "Project-Id-Version: neuf-events\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-20 21:51+0100\n"
-"PO-Revision-Date: 2012-01-20 21:58+0100\n"
-"Last-Translator: Nikolai Kristiansen <nikolaik@gmail.com>\n"
+"POT-Creation-Date: 2012-09-18 23:06+0100\n"
+"PO-Revision-Date: 2012-09-18 23:08+0100\n"
+"Last-Translator: Just Thomas Misund <t@studentersamfundet.no>\n"
 "Language-Team: Nikolai Kristiansen <nikolai@studentersamfundet.no>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Poedit-Language: Norwegian Bokmal\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: /home/nikolark/dev/edb/neuf-web/wp-content/plugins/neuf-events/\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: neuf-events-post-types.php:11
+msgid "Events"
+msgstr "Arrangementer"
+
+#: neuf-events-post-types.php:12
+msgid "Event"
+msgstr "Arrangement"
+
+#: neuf-events-post-types.php:13
+#: neuf-events-post-types.php:14
+msgid "Add New"
+msgstr "Legg til ny"
+
+#: neuf-events-post-types.php:15
+msgid "Edit Event"
+msgstr "Rediger arrrangement"
+
+#: neuf-events-post-types.php:16
+msgid "Add New Event"
+msgstr "Legg til nytt arrangement"
+
+#: neuf-events-post-types.php:17
+msgid "View Event"
+msgstr "Vis arrangement"
+
+#: neuf-events-post-types.php:18
+msgid "Search Events"
+msgstr "Søk i arrangementer"
+
+#: neuf-events-post-types.php:19
+msgid "No events found"
+msgstr "Ingen arrangement funnet"
+
+#: neuf-events-post-types.php:20
+msgid "No events found in trash"
+msgstr "Ingen arrangement funnet i søpla"
+
+#: neuf-events-post-types.php:23
+msgid "event"
+msgstr "arrangement"
+
+#: neuf-events-admin.php:7
+msgid "Title"
+msgstr "Tittel"
+
+#: neuf-events-admin.php:8
+msgid "Date & Time"
+msgstr "Dato og klokkeslett"
+
+#: neuf-events-admin.php:9
+msgid "Ending Date & Time"
+msgstr "Sluttdato og -klokkeslett"
+
+#: neuf-events-admin.php:10
+msgid "Venue"
+msgstr "Sted"
+
+#: neuf-events-admin.php:11
+msgid "Type"
+msgstr "Type"
+
+#: neuf-events-admin.php:12
+#: neuf-events-admin.php:167
+msgid "Promo Period"
+msgstr "Promo-periode"
+
+#: neuf-events-admin.php:13
+msgid "Date Published"
+msgstr "Publiseringsdato"
+
+#: neuf-events-admin.php:14
+msgid "Author"
+msgstr "Forfatter"
+
+#: neuf-events-admin.php:29
+msgid "None"
+msgstr "Ikke satt"
+
+#: neuf-events-admin.php:85
+msgid "Event Details"
+msgstr "Arrangementsdetaljer"
+
+#: neuf-events-admin.php:126
+msgid "Starts"
+msgstr "Start"
+
+#: neuf-events-admin.php:127
+msgid "Ends"
+msgstr "Slutt"
+
+#: neuf-events-admin.php:140
+msgid "Venue:"
+msgstr "Sted:"
+
+#: neuf-events-admin.php:152
+msgid "Elsewhere"
+msgstr "Annetsteds"
+
+#: neuf-events-admin.php:164
+msgid "Default"
+msgstr "Standard"
+
+#: neuf-events-admin.php:164
+msgid "Week"
+msgstr "Uke"
+
+#: neuf-events-admin.php:164
+msgid "Month"
+msgstr "Måned"
+
+#: neuf-events-admin.php:164
+msgid "Semester"
+msgstr "Semester"
+
+#: neuf-events-admin.php:190
+msgid "Price Regular"
+msgstr "Vanlig pris"
+
+#: neuf-events-admin.php:192
+msgid "Price Member"
+msgstr "Medlemspris"
+
+#: neuf-events-admin.php:194
+msgid "Billettservice address"
+msgstr "Billettservice adresse"
+
+#: neuf-events-admin.php:196
+msgid "Facebook address"
+msgstr "Facebook adresse"
 
 #: neuf-events-taxonomies.php:9
 #: neuf-events-taxonomies.php:10
@@ -61,104 +191,12 @@ msgstr "Navn"
 msgid "Event Types"
 msgstr "Arrangementstyper"
 
-#: neuf-events-admin.php:7
-msgid "Title"
-msgstr "Tittel"
+#: neuf-events-taxonomies.php:33
+msgid "eventtype"
+msgstr "konsept:"
 
-#: neuf-events-admin.php:8
-msgid "Date & Time"
-msgstr "Dato og klokkeslett"
-
-#: neuf-events-admin.php:9
-msgid "Ending Date & Time"
-msgstr "Sluttdato og -klokkeslett"
-
-#: neuf-events-admin.php:10
-msgid "Venue"
-msgstr "Sted"
-
-#: neuf-events-admin.php:11
-msgid "Type"
-msgstr "Type"
-
-#: neuf-events-admin.php:12
-msgid "Date Published"
-msgstr "Publiseringsdato"
-
-#: neuf-events-admin.php:13
-msgid "Author"
-msgstr "Forfatter"
-
-#: neuf-events-admin.php:28
-msgid "None"
-msgstr "Ikke satt"
-
-#: neuf-events-admin.php:80
-msgid "Event Details"
-msgstr "Arrangementsdetaljer"
-
-#: neuf-events-admin.php:113
-msgid "Starts"
-msgstr "Start"
-
-#: neuf-events-admin.php:114
-msgid "Ends"
-msgstr "Slutt"
-
-#: neuf-events-admin.php:127
-msgid "Venue:"
-msgstr "Sted:"
-
-#: neuf-events-admin.php:137
-msgid "<option value=\"Annet\">Other</option>"
-msgstr "<option value=\"Annet\">Annet</option>"
-
-#: neuf-events-admin.php:150
-msgid "Price"
-msgstr "Pris:"
-
-#: neuf-events-admin.php:152
-msgid "Billettservice address"
-msgstr "Billettservice adresse"
-
-#: neuf-events-admin.php:154
-msgid "Facebook address"
-msgstr "Facebook adresse"
-
-#: neuf-events-post-types.php:11
-msgid "Events"
-msgstr "Arrangementer"
-
-#: neuf-events-post-types.php:12
-msgid "Event"
-msgstr "Arrangement"
-
-#: neuf-events-post-types.php:13
-#: neuf-events-post-types.php:14
-msgid "Add New"
-msgstr "Legg til ny"
-
-#: neuf-events-post-types.php:15
-msgid "Edit Event"
-msgstr "Rediger arrrangement"
-
-#: neuf-events-post-types.php:16
-msgid "Add New Event"
-msgstr "Legg til nytt arrangement"
-
-#: neuf-events-post-types.php:17
-msgid "View Event"
-msgstr "Vis arrangement"
-
-#: neuf-events-post-types.php:18
-msgid "Search Events"
-msgstr "Søk i arrangementer"
-
-#: neuf-events-post-types.php:19
-msgid "No events found"
-msgstr "Ingen arrangement funnet"
-
-#: neuf-events-post-types.php:20
-msgid "No events found in trash"
-msgstr "Ingen arrangement funnet i søpla"
+#~ msgid "<option value=\"Annet\">Other</option>"
+#~ msgstr "<option value=\"Annet\">Annet</option>"
+#~ msgid "Price"
+#~ msgstr "Pris:"
 

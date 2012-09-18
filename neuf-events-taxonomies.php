@@ -19,19 +19,21 @@ function neuf_events_register_taxonomies() {
 		'menu_name'         => __('Event Types', 'neuf_event'),
 	);
 
-	register_taxonomy( 'event_type', array(
-		'post',
-		'event'
-	), array(
-		'hierarchical' => true,
-		'labels'       => $labels,
-		'show_ui'      => true,
-		'query_var'    => true,
-		'rewrite'      => array(
-			'slug'         => 'eventtypes',
-			'hierarchical' => true
-		)
-	) );
+	register_taxonomy(
+		'event_type', 
+		array(
+			'post',
+			'event'
+		), array(
+			'hierarchical' => true,
+			'labels'       => $labels,
+			'show_ui'      => true,
+			'query_var'    => true,
+			'rewrite'      => array(
+				'slug'         => __( 'eventtype', 'neuf_event' ),
+				'hierarchical' => true
+			)
+		) );
 }
 
 /**
