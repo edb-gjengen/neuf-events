@@ -205,4 +205,38 @@ if( !function_exists('format_datetime') ) {
 	}
 }
 
+/**
+ *  Add our stuff to the 'right now' dashboard widget.
+ */
+function neuf_events_right_now_dashboard() {
+	// First, let's add a line about our events
+	$post_type = get_post_type_object( 'event' );
+
+	$num_posts = wp_count_posts( $post_type->name );
+	$num = number_format_i18n( $num_posts->publish );
+	$text = _n( $post_type->labels->singular_name, $post_type->labels->name , intval( $num_posts->publish ) );
+	if ( current_user_can( 'edit_posts' ) ) {
+
+		$num = "<a href='edit.php?post_type=$post_type->name'>$num</a>";
+		$text = "<a href='edit.php?post_type=$post_type->name'>$text</a>";
+	}
+	echo '<tr><td class="first b b-' . $post_type->name . '">' . $num . '</td>';
+	echo '<td class="t ' . $post_type->name . '">' . $text . '</td></tr>';
+
+	// Now, let's add a line about our event types
+	$taxonomy = get_taxonomy( 'event_type' );
+
+	$num_terms  = wp_count_terms( $taxonomy->name );
+	$num = number_format_i18n( $num_terms );
+	$text = _n( $taxonomy->labels->singular_name, $taxonomy->labels->name , intval( $num_terms ));
+	if ( current_user_can( 'manage_categories' ) ) {
+
+		$num = "<a href='edit-tags.php?taxonomy=$taxonomy->name'>$num</a>";
+		$text = "<a href='edit-tags.php?taxonomy=$taxonomy->name'>$text</a>";
+	}
+	echo '<tr><td class="first b b-' . $taxonomy->name . '">' . $num . '</td>';
+	echo '<td class="t ' . $taxonomy->name . '">' . $text . '</td></tr>';
+}
+add_action( 'right_now_content_table_end' , 'neuf_events_right_now_dashboard' );
+
 ?>

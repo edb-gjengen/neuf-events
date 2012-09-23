@@ -6,7 +6,7 @@
  */
 function neuf_events_register_taxonomies() {
 	$labels = array(
-		'name'              => __('Event Type', 'neuf_event'), //Arrangementstype
+		'name'              => __('Event Types', 'neuf_event'), //Arrangementstype
 		'singular_name'     => __('Event Type', 'neuf_event'),
 		'search_items'      => __('Search Event Types', 'neuf_event'),//'S&oslash;k etter arrangementstype',
 		'all_items'	    => __('All Event Types', 'neuf_event'),
