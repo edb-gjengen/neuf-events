@@ -83,6 +83,38 @@ function neuf_events_save_post( $post_id, $post ) {
 	return $post_id;
 }
 
+/**
+ * Set post variables.
+ *
+ * Add some handy variables to the global $post. Added to the 'the_post' action hook.
+ */
+function neuf_events_the_post( &$post ) {
+	// Only apply to events
+	if ( 'event' != get_post_type() )
+		return;
+
+	$post->neuf_events_venue         = get_post_meta( get_the_ID() , '_neuf_events_venue'         , true );
+	$post->neuf_events_fb_url        = get_post_meta( get_the_ID() , '_neuf_events_fb_url'        , true );
+	$post->neuf_events_ticket_url    = get_post_meta( get_the_ID() , '_neuf_events_bs_url'        , true );
+	$post->neuf_events_price_regular = get_post_meta( get_the_ID() , '_neuf_events_price_regular' , true );
+	$post->neuf_events_price_member  = get_post_meta( get_the_ID() , '_neuf_events_price_member'  , true );
+	$post->neuf_events_starttime     = get_post_meta( get_the_ID() , '_neuf_events_starttime'     , true );
+	$post->neuf_events_endtime       = get_post_meta( get_the_ID() , '_neuf_events_endtime'       , true );
+
+	$post->neuf_events_endtime   = $post->endtime ? $post->endtime : $post->starttime + 7200; // No endtime? Assume 2 hours
+
+	$post->neuf_events_gcal_url  = "http://www.google.com/calendar/event?action=TEMPLATE";
+	$post->neuf_events_gcal_url .= "&text=" . rawurlencode(get_the_title());
+	$post->neuf_events_gcal_url .= "&details=" . rawurlencode(get_the_excerpt());
+	$post->neuf_events_gcal_url .= "&location=Det%20Norske%20Studentersamfund,%20Slemdalsveien%2015,%20Oslo";
+	$post->neuf_events_gcal_url .= "&trp=true";
+	$post->neuf_events_gcal_url .= "&sprop=website:" . rawurlencode(get_permalink());
+	$post->neuf_events_gcal_url .= "&sprop=name:Det%20Norske%20Studentersamfund";
+	$post->neuf_events_gcal_url .= "&dates=" . date( 'Ymd\THis\Z' , $post->starttime - ( get_option('gmt_offset') * 3600 ) );
+	$post->neuf_events_gcal_url .= "/" . date( 'Ymd\THis\Z' , $post->starttime - ( get_option('gmt_offset') * 3600 ) );
+
+}
+
 /** Sample table view of events */
 function neuf_events_program() {
 	global $post, $wp_locale;

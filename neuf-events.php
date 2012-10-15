@@ -18,10 +18,12 @@ require_once( 'neuf-events-taxonomies.php' );
 
 /* Register the translations */
 add_action( 'init' , 'neuf_events_i18n' , 0 );
+
 /* Register the event post type */
 add_action( 'init' , 'neuf_events_post_type' , 0 );
 add_action( 'save_post' , 'neuf_events_save_post', 100, 2);
 add_action( 'publish_neuf_events' , 'neuf_events_publish' );
+add_action( 'the_post' , 'neuf_events_the_post' );
 
 /* Register taxonomies */
 add_action( 'init' , 'neuf_events_register_taxonomies', 1 );
