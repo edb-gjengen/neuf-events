@@ -104,7 +104,7 @@ function neuf_event_details() {
 	<div class="misc-pub-section misc-pub-section-last">
         <?php
             /* Only editor or superior can set the promo period */
-            if ( current_user_can('edit_others_posts') ) {
+            if ( current_user_can('publish_posts') ) {
                 neuf_event_promoperiod();
             }
         ?>
