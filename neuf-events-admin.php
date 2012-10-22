@@ -53,6 +53,28 @@ function sortable_columns( $cols ) {
 	return array_merge($cols, $custom_cols);
 }
 add_filter( "manage_edit-event_sortable_columns", "sortable_columns" );
+/*
+ * http://scribu.net/wordpress/custom-sortable-columns.html#comment-4732
+ */
+function starttime_column_orderby( $vars ) {
+    if ( isset( $vars['orderby']) ) {
+        if('starttime' == $vars['orderby'] ) {
+            $vars = array_merge( $vars, array(
+                'meta_key' => '_neuf_events_starttime',
+                'orderby' => 'meta_value'
+            ) );
+        }
+        if ( 'endtime' == $vars['orderby'] ) {
+            $vars = array_merge( $vars, array(
+                'meta_key' => '_neuf_events_endtime',
+                'orderby' => 'meta_value'
+            ) );
+        }
+    }
+    return $vars;
+}
+add_filter( 'request', 'starttime_column_orderby' );
+
 
 function add_admin_script_and_styles() {
 	// Date-selection for events
