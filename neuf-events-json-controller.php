@@ -25,6 +25,7 @@ class JSON_API_Events_Controller {
         );
         $custom_fields = array(
             '_neuf_events_price_regular',
+            '_neuf_events_price_member',
             '_neuf_events_starttime',
             '_neuf_events_endtime',
             '_neuf_events_venue',
