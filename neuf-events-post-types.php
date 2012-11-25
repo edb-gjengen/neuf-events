@@ -101,7 +101,7 @@ function neuf_events_the_post( &$post ) {
 	$post->neuf_events_starttime     = get_post_meta( get_the_ID() , '_neuf_events_starttime'     , true );
 	$post->neuf_events_endtime       = get_post_meta( get_the_ID() , '_neuf_events_endtime'       , true );
 
-	$post->neuf_events_endtime   = $post->endtime ? $post->endtime : $post->starttime + 7200; // No endtime? Assume 2 hours
+	$post->neuf_events_endtime   = $post->neuf_events_endtime ? $post->neuf_events_endtime : $post->neuf_events_starttime + 7200; // No endtime? Assume 2 hours
 
 	$post->neuf_events_gcal_url  = "http://www.google.com/calendar/event?action=TEMPLATE";
 	$post->neuf_events_gcal_url .= "&text=" . rawurlencode(get_the_title());
@@ -110,8 +110,8 @@ function neuf_events_the_post( &$post ) {
 	$post->neuf_events_gcal_url .= "&trp=true";
 	$post->neuf_events_gcal_url .= "&sprop=website:" . rawurlencode(get_permalink());
 	$post->neuf_events_gcal_url .= "&sprop=name:Det%20Norske%20Studentersamfund";
-	$post->neuf_events_gcal_url .= "&dates=" . date( 'Ymd\THis\Z' , $post->starttime - ( get_option('gmt_offset') * 3600 ) );
-	$post->neuf_events_gcal_url .= "/" . date( 'Ymd\THis\Z' , $post->starttime - ( get_option('gmt_offset') * 3600 ) );
+	$post->neuf_events_gcal_url .= "&dates=" . date( 'Ymd\THis\Z' , $post->neuf_events_starttime - ( get_option('gmt_offset') * 3600 ) );
+	$post->neuf_events_gcal_url .= "/" . date( 'Ymd\THis\Z' , $post->neuf_events_starttime - ( get_option('gmt_offset') * 3600 ) );
 
 }
 
