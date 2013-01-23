@@ -157,8 +157,9 @@ function neuf_event_venue(){
 	global $post;
 
 	$venues = array(
-		'Betong', 'Betonghaven','Biblioteket', 'BokCaféen',
-		'Klubbscenen', 'Lillesalen', 'Teaterscenen', 'Storsalen',
+        'Betong', 'Betonghaven', 'Biblioteket', 'BokCaféen',
+        'Foajeen', 'Galleriet', 'Klubbscenen', 'Lillesalen',
+        'Teaterscenen', 'Storsalen',
 	);
 	$neuf_event_venue = get_post_meta($post->ID, '_neuf_events_venue', true);
 	_e('Venue:', 'neuf_event');
