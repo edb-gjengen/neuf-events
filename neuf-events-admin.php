@@ -78,29 +78,31 @@ add_filter( 'request', 'starttime_column_orderby' );
 
 function add_admin_script_and_styles() {
 	// Date-selection for events
-	wp_register_style('timecss', plugins_url("/neuf-events/style/jquery-ui-1.8.12.custom.css", dirname(__FILE__)));
+    wp_register_style('jquery-ui-css', plugins_url("/neuf-events/style/jquery-ui-1.8.12.custom.css", dirname(__FILE__)));
+	wp_register_style('jquery-ui-timepicker-css', plugins_url("/neuf-events/style/jquery-ui-timepicker-addon.css", dirname(__FILE__)));
 
-	wp_register_script('timepicker', plugins_url("/neuf-events/script/jquery-ui-timepicker-addon.js", dirname(__FILE__)));
+	wp_register_script('timepicker', plugins_url("/neuf-events/script/jquery-ui-timepicker-addon.js", dirname(__FILE__)), array('jquery-ui-datepicker') );
 	wp_register_script('timedefs', plugins_url("/neuf-events/script/timepickdef.js", dirname(__FILE__)));
-	// for upgrading jQuery ui, get core, widget, mouse, slider and datepicker
-	wp_register_script('custom-jqui', plugins_url("/neuf-events/script/jquery-ui-1.8.11.custom.min.js", dirname(__FILE__)));
-
 	// form validation: http://docs.jquery.com/Plugins/Validation#API_Documentation
 	wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
 	wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));
 
-	wp_enqueue_style('timecss');  
+	wp_enqueue_style('jquery-ui-css');  
+	wp_enqueue_style('jquery-ui-timepicker-css');  
 	wp_enqueue_script('jquery');      
-	wp_enqueue_script('custom-jqui');
+    wp_enqueue_script('jquery-ui-widget');
+    wp_enqueue_script('jquery-ui-mouse');
+    wp_enqueue_script('jquery-ui-slider');
+	wp_enqueue_script('jquery-ui-datepicker');
 	wp_enqueue_script('timepicker');
 	wp_enqueue_script('timedefs');
 	wp_enqueue_script('formvalidation');
 	wp_enqueue_script('validation_rules');
 }
+add_action('admin_enqueue_scripts', 'add_admin_script_and_styles');
 
 /* Add metaboxes (with styles) */
 function add_events_metaboxes() {
-	add_admin_script_and_styles();
 
 	add_meta_box(
 		'neuf_events_details',
