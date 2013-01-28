@@ -18,7 +18,7 @@ class JSON_API_Events_Controller {
         $query = array(
             'post_type'      => 'event',
             'meta_query'     => array( $meta_query ),
-            'posts_per_page' => 50,
+            'posts_per_page' => 300,
             'orderby'        => 'meta_value_num',
             'meta_key'       => '_neuf_events_starttime',
             'order'          => 'ASC'
