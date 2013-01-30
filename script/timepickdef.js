@@ -7,7 +7,7 @@ $j(function(){
 		closeText: 'Ok',
 		hourText: 'Time',
 		dateFormat: 'yy-mm-dd',
-		timeFormat: 'hh:mm',
+		timeFormat: 'HH:mm',
 		minuteText: 'Minutt',
 		timeText: 'Tid',
 		firstDay: 1,
