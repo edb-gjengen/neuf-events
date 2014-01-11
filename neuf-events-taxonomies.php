@@ -22,7 +22,6 @@ function neuf_events_register_taxonomies() {
 	register_taxonomy(
 		'event_type', 
 		array(
-			'post',
 			'event'
 		), array(
 			'hierarchical' => true,

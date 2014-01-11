@@ -34,6 +34,7 @@ class JSON_API_Events_Controller {
         );
         $json_api->query->custom_fields = implode(',', $custom_fields);
         $events = $json_api->introspector->get_posts($query);
+        $events = $this->add_parent_root_event_types($events);
         return $this->events_result($events);
     }
     protected function events_result($events) {
@@ -45,5 +46,23 @@ class JSON_API_Events_Controller {
             'events' => $events
         );
     }
+    protected function add_parent_root_event_types($events) {
+        foreach ($events as $event) {
+            $event_types = array();
+            $event_array = get_the_terms( $event->id , 'event_type');
+            foreach ( $event_array as $event_type ) {
+                while ( $event_type->parent !== 0) {
+                    $id = (int)$event_type->parent;
+                    $event_type = get_term( $id, 'event_type' );
+                } 
+
+                $event_types[] = $event_type->name;
+            }
+            $event->event_type_parents = $event_types;
+        }
+
+        return $events;
+    }
+
 }
 ?>
