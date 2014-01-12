@@ -46,17 +46,33 @@ class JSON_API_Events_Controller {
             'events' => $events
         );
     }
+    protected function is_root_event_type($term) {
+        return $term->parent == 0;
+
+    }
+    protected function get_parent_root($term) {
+        if( $this->is_root_event_type($term) ) {
+            return $term;
+        }
+        $parent_term = null;
+        foreach($this->event_types as $type) {
+            if($type->term_id == $term->parent) {
+                $parent_term = $type;
+                break;
+            }
+        }
+        return $this->get_parent_root($parent_term);
+    }
     protected function add_parent_root_event_types($events) {
+        // taxonomy tree
+        $this->event_types = get_terms(array('event_type'));
         foreach ($events as $event) {
             $event_types = array();
-            $event_array = get_the_terms( $event->id , 'event_type');
-            foreach ( $event_array as $event_type ) {
-                while ( $event_type->parent !== 0) {
-                    $id = (int)$event_type->parent;
-                    $event_type = get_term( $id, 'event_type' );
-                } 
-
-                $event_types[] = $event_type->name;
+            foreach ( $event->taxonomy_event_type as $event_type ) {
+                $event_type = $this->get_parent_root($event_type);
+                /* Can be either JSON_API_Category or stdClass */
+                $name = get_class($event_type) === 'stdClass' ? $event_type->name : $event_type->title;
+                $event_types[] = $name;
             }
             $event->event_type_parents = $event_types;
         }
