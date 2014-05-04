@@ -8,6 +8,11 @@ class JSON_API_Events_Controller {
     /* /?json=events.get_upcoming */
     public function get_upcoming() {
         global $json_api;
+
+        /* Get query params */
+        $url = parse_url($_SERVER['REQUEST_URI']);
+        $query = wp_parse_args($url['query']);
+
         $meta_query = array(
             'key'     => '_neuf_events_starttime',
             'value'   => date( 'U' , strtotime( '-8 hours' ) ), 
@@ -15,14 +20,19 @@ class JSON_API_Events_Controller {
             'type'    => 'numeric'
         );
 
-        $query = array(
-            'post_type'      => 'event',
-            'meta_query'     => array( $meta_query ),
-            'posts_per_page' => 300,
-            'orderby'        => 'meta_value_num',
-            'meta_key'       => '_neuf_events_starttime',
-            'order'          => 'ASC'
+        $defaults = array(
+            'post_type'           => 'event',
+            'meta_query'          => array( $meta_query ),
+            'posts_per_page'      => 300,
+            'orderby'             => 'meta_value_num',
+            'meta_key'            => '_neuf_events_starttime',
+            'order'               => 'ASC',
+            'ignore_sticky_posts' => true
         );
+
+        // Defaults can easily be overwritten
+        $query = array_merge($defaults, $query);
+
         $custom_fields = array(
             '_neuf_events_price_regular',
             '_neuf_events_price_member',
