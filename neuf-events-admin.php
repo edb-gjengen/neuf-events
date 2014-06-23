@@ -157,7 +157,7 @@ function neuf_event_venue(){
 	global $post;
 
 	$venues = array(
-        'Betong', 'Betonghaven', 'Biblioteket', 'BokCaféen',
+        'Betong', 'Glassbaren', 'Betonghaven', 'Biblioteket', 'BokCaféen',
         'Foajeen', 'Galleriet', 'Klubbscenen', 'Lillesalen',
         'M&oslash;rkerommet', 'Teaterscenen', 'Storsalen', 'Hele huset',
 	);
