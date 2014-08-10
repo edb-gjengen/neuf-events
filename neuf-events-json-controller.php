@@ -5,6 +5,49 @@
  */
 class JSON_API_Events_Controller {
 
+    /* /?json=events.get_today */
+    public function get_today() {
+        global $json_api;
+
+        /* Get query params */
+        $url = parse_url($_SERVER['REQUEST_URI']);
+        $query = wp_parse_args($url['query']);
+
+        $meta_query = array(
+            'key'     => '_neuf_events_starttime',
+            'value'   => array(date( 'U' , strtotime( '-8 hours' ) ), date( 'U' , strtotime( 'tomorrow' ) )), 
+            'compare' => 'BETWEEN',
+            'type'    => 'NUMERIC'
+        );
+
+        $defaults = array(
+            'post_type'           => 'event',
+            'meta_query'          => array( $meta_query ),
+            'posts_per_page'      => 300,
+            'orderby'             => 'meta_value_num',
+            'meta_key'            => '_neuf_events_starttime',
+            'order'               => 'ASC',
+            'ignore_sticky_posts' => true
+        );
+
+        // Defaults can easily be overwritten
+        $query = array_merge($defaults, $query);
+
+        $custom_fields = array(
+            '_neuf_events_price_regular',
+            '_neuf_events_price_member',
+            '_neuf_events_starttime',
+            '_neuf_events_endtime',
+            '_neuf_events_venue',
+            '_neuf_events_bs_url',
+            '_neuf_events_fb_url',
+        );
+        $json_api->query->custom_fields = implode(',', $custom_fields);
+        $events = $json_api->introspector->get_posts($query);
+        $events = $this->add_parent_root_event_types($events);
+        return $this->events_result($events);
+    }
+
     /* /?json=events.get_upcoming */
     public function get_upcoming() {
         global $json_api;
