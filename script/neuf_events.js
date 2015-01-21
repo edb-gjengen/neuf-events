@@ -1,8 +1,6 @@
-var $j = jQuery.noConflict();
-
-$j(function(){
-	// Datepicker
-	$j('.datepicker').datetimepicker({
+jQuery(document).ready(function($){
+	/* Datetimepicker */
+	$('.datepicker').datetimepicker({
 		currentText: 'Nå',
 		closeText: 'Ok',
 		hourText: 'Time',
@@ -15,6 +13,15 @@ $j(function(){
 		dayNames: ['søndag','mandag','tirsdag','onsdag','torsdag','fredag','lørdag'],
 		dayNamesShort: ['søn','man','tir','ons','tor','fre','lør'],
 		dayNamesMin: ['sø','ma','ti','on','to','fr','lø']
-	});
-	
+    });
+
+    /* Validation rules */
+    $("#post").validate({
+        rules: {
+            neuf_events_start_time: "required"
+        },
+        messages: {
+            neuf_events_start_time: "Velg startdato og klokkeslett"
+        }
+    });
 });

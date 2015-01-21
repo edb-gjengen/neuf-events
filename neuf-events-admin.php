@@ -77,27 +77,18 @@ add_filter( 'request', 'starttime_column_orderby' );
 
 
 function add_admin_script_and_styles() {
-	// Date-selection for events
-    wp_register_style('jquery-ui-css', plugins_url("/neuf-events/style/jquery-ui-1.8.12.custom.css", dirname(__FILE__)));
-	wp_register_style('jquery-ui-timepicker-css', plugins_url("/neuf-events/style/jquery-ui-timepicker-addon.css", dirname(__FILE__)));
+    // Datetime selection and form validation
+    // Ref: http://trentrichardson.com/examples/timepicker/ 
+    // Ref: http://docs.jquery.com/Plugins/Validation#API_Documentation
+    wp_register_style('jquery-ui-css', plugins_url("neuf-events/style/jquery-ui.min.css"));
+	wp_register_style('jquery-ui-timepicker-css', plugins_url("neuf-events/style/jquery-ui-timepicker-addon.css"), array('jquery-ui-css'));
 
-	wp_register_script('timepicker', plugins_url("/neuf-events/script/jquery-ui-timepicker-addon.js", dirname(__FILE__)), array('jquery-ui-datepicker') );
-	wp_register_script('timedefs', plugins_url("/neuf-events/script/timepickdef.js", dirname(__FILE__)));
-	// form validation: http://docs.jquery.com/Plugins/Validation#API_Documentation
-	wp_register_script('formvalidation', plugins_url("/neuf-events/script/jquery.validate.min.js", dirname(__FILE__)));
-	wp_register_script('validation_rules', plugins_url("/neuf-events/script/validation_rules.js", dirname(__FILE__)));
+	wp_register_script('jquery-ui-timepicker-addon', plugins_url("neuf-events/script/jquery-ui-timepicker-addon.js"), array('jquery-ui-slider', 'jquery-ui-datepicker') );
+	wp_register_script('jquery-validate', plugins_url("neuf-events/script/jquery.validate.min.js"), array('jquery'));
+	wp_register_script('neuf-events', plugins_url("neuf-events/script/neuf_events.js"), array('jquery-ui-timepicker-addon', 'jquery-validate'));
 
-	wp_enqueue_style('jquery-ui-css');  
 	wp_enqueue_style('jquery-ui-timepicker-css');  
-	wp_enqueue_script('jquery');      
-    wp_enqueue_script('jquery-ui-widget');
-    wp_enqueue_script('jquery-ui-mouse');
-    wp_enqueue_script('jquery-ui-slider');
-	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_script('timepicker');
-	wp_enqueue_script('timedefs');
-	wp_enqueue_script('formvalidation');
-	wp_enqueue_script('validation_rules');
+	wp_enqueue_script('neuf-events');
 }
 add_action('admin_enqueue_scripts', 'add_admin_script_and_styles');
 
